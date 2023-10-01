@@ -6,10 +6,10 @@ revisarPrivilegio(4);
 if (isset($_GET['id_eliminar'])){
     $idEliminar = $_GET['id_eliminar'];
 
-    $sqlEliminar = "UPDATE templeados SET estado = 2 WHERE id = '$idEliminar'";
+    $sqlEliminar = "UPDATE tinventario SET estado = 2 WHERE id = '$idEliminar'";
     $queryEliminar = mysqli_query($conn, $sqlEliminar);
 
-    header('location: empleados.php');
+    header('location: inventario.php');
     exit();
 }
 
@@ -19,16 +19,16 @@ include("../../template/top.php");
   
 <div class="card m-4">
   <div class="card-body">
-  <h4>Nuevo Empleado</h4>
+  <h4>Nuevo INVENTARIO</h4>
   <hr>
   <div class="row text-right m-2">
       <div class="col-12">
-          <a href="nuevoEmpleados.php" class="btn btn-primary"><i class="fas fa-fw fa-folder-plus mr-2"></i>Nuevo Empleado</a>
+          <a href="nuevoInventario.php" class="btn btn-primary"><i class="fas fa-fw fa-folder-plus mr-2"></i>Nuevo Empleado</a>
       </div>
   </div>
 
   <?php
-  $sqlClientes = "SELECT * FROM templeados WHERE estado = 1";
+  $sqlClientes = "SELECT * FROM tinventario WHERE estado = 1";
   $queryClientes = mysqli_query($conn, $sqlClientes);
 
 
@@ -36,7 +36,7 @@ include("../../template/top.php");
   ?>
   <div calss="row text-center">
       <div class="col-12">
-          NO HAY Empleados
+          NO HAY INVENTARIO
       </div>
   </div>
   <?php
@@ -45,11 +45,9 @@ include("../../template/top.php");
   <table class="table table-sm table-striped">
       <thead class="bg-dark text-light">
           <th></th>
-          <th>Identificación</th>
           <th>Nombre</th>
-          <th>Apellidos</th>
-          <th>Puesto</th>
-          <th>Telefono</th>
+          <th>Fecha</th>
+          <th>Descripcion</th>
       </thead>
 
       <tbody>
@@ -58,17 +56,15 @@ include("../../template/top.php");
             ?>
             <tr>
                 <td>
-                    <a href="editarEmpleados.php?id_editar=<?=$rowClientes['id']?>" class="btn btn-secondary"><i class="fa fa-fw fa-pen"></i></a>
+                    <a href="editarInventario.php?id_editar=<?=$rowClientes['id']?>" class="btn btn-secondary"><i class="fa fa-fw fa-pen"></i></a>
                     <!-- Agrega el SweetAlert2 -->
                     <a href="#" class="btn btn-danger delete-btn" data-id="<?=$rowClientes['id']?>"><i class="fas fa-fw fa-trash"></i></a>
                     
                     <a href="AgregarPlanilla.php?id_editar=<?=$rowClientes['identificacion']?>" class="btn btn-secondary"><i class="fa fa-fw fa-file"></i></a>
                 </td>
-                <td><?=$rowClientes['identificacion']?></td>
                 <td><?=$rowClientes['nombre']?></td>
-                <td><?=$rowClientes['apellidos']?></td>
-                <td><?=$rowClientes['puesto']?></td>
-                <td><?=$rowClientes['telefono']?></td>
+                <td><?=$rowClientes['fecha']?></td>
+                <td><?=$rowClientes['descripcion']?></td>
             </tr>
             <?php
           }
@@ -99,7 +95,7 @@ include("../../template/top.php");
         }).then((result) => {
           // Si el usuario hace clic en "Sí, eliminar!", redirige a la página de eliminación
           if (result.isConfirmed) {
-            window.location.href = `empleados.php?id_eliminar=${idEliminar}`;
+            window.location.href = `inventario.php?id_eliminar=${idEliminar}`;
           }
         });
       });
