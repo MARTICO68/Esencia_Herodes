@@ -3,7 +3,7 @@ include("conn/conn.php");
 $titulo = "Ubicación";
 include("template/top.php");
 ?>
-
+sd
 <div class="row text-center">
     <div class="col-12">
 
