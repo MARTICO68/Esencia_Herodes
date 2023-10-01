@@ -8,25 +8,21 @@ if (isset($_GET['id_editar'])){
 
 if (isset($_POST['guardar'])){
     $id = $_POST['id'];
-    $identificacion = $_POST['identificacion'];
     $nombre = $_POST['nombre'];
-    $apellidos = $_POST['apellidos'];
-    $puesto = $_POST['puesto'];
-    $telefono = $_POST['telefono'];
+    $fecha = $_POST['fecha'];
+    $descripcion = $_POST['descripcion'];
    
-    $sqlClientes = "UPDATE templeados SET 
-    identificacion = '$identificacion',
+    $sqlClientes = "UPDATE tinventario SET 
     nombre = '$nombre',
-    apellidos = '$apellidos',
-    puesto = '$puesto',
-    telefono = '$telefono'
+    fecha = '$fecha',
+    descripcion = '$descripcion'
     WHERE id = '$id'";
     $queryClientes = mysqli_query($conn, $sqlClientes);
 
     ?>
     <script>
         alert('El Empleado fue Editado exitosamente.');
-        document.location.href = 'empleados.php';
+        document.location.href = 'inventario.php';
     </script>
     <?php
     exit();
@@ -41,7 +37,7 @@ include('../../template/top.php');
     <hr>
     <div class="row text-right">
         <div class="col-12">
-            <a href="empleados.php" class="btn btn-primary"><i class="fas fa-fw fa-arrow-left"></i> Regresar</a>
+            <a href="inventario.php" class="btn btn-primary"><i class="fas fa-fw fa-arrow-left"></i> Regresar</a>
         </div>
     </div>
 
@@ -49,7 +45,7 @@ include('../../template/top.php');
         <div class="col-12 col-md-6">
 
         <?php 
-            $sqlEditar = "SELECT * FROM templeados WHERE id = '$idEditar'";
+            $sqlEditar = "SELECT * FROM tinventario WHERE id = '$idEditar'";
             $queryEditar = mysqli_query($conn, $sqlEditar);
             while($rowEditar=mysqli_fetch_array($queryEditar)){
             ?>
@@ -59,36 +55,23 @@ include('../../template/top.php');
                 <input type="hidden" value="<?=$rowEditar['id']?>" name="id">
 
                 <div class="row">
-                    <div class="col-6">
-                        <label for="identificacion" class="animate__animated animate__slideInLeft" ><i class="fas fa-fw fa-id-card animate__animated animate__slideInLeft"></i> Identificación:</label>
-                        <input type="text" id="identificacion" value="<?=$rowEditar['identificacion']?>" name="identificacion" class="form-control shadow-sm animate__animated animate__zoomIn">
-
-                    </div>
-                </div>
-
-                <div class="row">
                     <div class="col-md-6">
                         <label for="nombre" class="animate__animated animate__slideInLeft"><i class="fas fa-fw fa-user animate__animated animate__slideInLeft"></i> Nombre:</label>
                         <input type="text" id="nombre" value="<?=$rowEditar['nombre']?>" name="nombre" class="form-control shadow-sm animate__animated animate__zoomIn">
                     </div>
               
                     <div class="col-md-6">
-                        <label for="apellidos" class="animate__animated animate__slideInLeft"><i class="far fa-fw fa-user-circle animate__animated animate__slideInLeft"></i> Apellidos:</label>
-                        <input type="text" id="apellidos" value="<?=$rowEditar['apellidos']?>" name="apellidos" class="form-control shadow-sm animate__animated animate__zoomIn">
+                        <label for="fecha" class="animate__animated animate__slideInLeft"><i class="far fa-fw fa-user-circle animate__animated animate__slideInLeft"></i> Fecha:</label>
+                        <input type="date" id="fecha" value="<?=$rowEditar['fecha']?>" name="fecha" class="form-control shadow-sm animate__animated animate__zoomIn">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="puesto" class="animate__animated animate__slideInLeft"><i class="far fa-fw fa-user-circle animate__animated animate__slideInLeft"></i> Puesto:</label>
-                        <input type="text" id="puesto" value="<?=$rowEditar['puesto']?>" name="puesto" class="form-control shadow-sm animate__animated animate__zoomIn">
-                    </div>
-                
-                    <div class="col-md-6">
-                        <label for="telefono" class="animate__animated animate__slideInLeft"><i class="fas fa-fw fa-phone animate__animated animate__slideInLeft"></i> Teléfono: </label>
-                        <input type="text" id="telefono" value="<?=$rowEditar['telefono']?>" name="telefono" class="form-control shadow-sm animate__animated animate__zoomIn">
-                    </div>
+                        <label for="descripcion" class="animate__animated animate__slideInLeft"><i class="far fa-fw fa-user-circle animate__animated animate__slideInLeft"></i> Descripcion:</label>
+                        <input type="text" id="descripcion" value="<?=$rowEditar['descripcion']?>" name="descripcion" class="form-control shadow-sm animate__animated animate__zoomIn">
                 </div>
+                
 
                 <div class="row text-center m-4">
                     <div class="col-12">

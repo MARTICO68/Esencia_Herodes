@@ -59,9 +59,6 @@ include("../../template/top.php");
                     <a href="editarInventario.php?id_editar=<?=$rowClientes['id']?>" class="btn btn-secondary"><i class="fa fa-fw fa-pen"></i></a>
                     <!-- Agrega el SweetAlert2 -->
                     <a href="#" class="btn btn-danger delete-btn" data-id="<?=$rowClientes['id']?>"><i class="fas fa-fw fa-trash"></i></a>
-                    
-                    <a href="AgregarPlanilla.php?id_editar=<?=$rowClientes['identificacion']?>" class="btn btn-secondary"><i class="fa fa-fw fa-file"></i></a>
-                </td>
                 <td><?=$rowClientes['nombre']?></td>
                 <td><?=$rowClientes['fecha']?></td>
                 <td><?=$rowClientes['descripcion']?></td>
