@@ -1,7 +1,8 @@
-<?php 
+<?php
 include("../../conn/conn.php");
 include("../../template/top.php");
 revisarPrivilegio(4);
+
 if (isset($_POST['guardar'])){
     $nombre = $_POST['nombre'];
     $fecha = $_POST['fecha'];
@@ -12,15 +13,30 @@ if (isset($_POST['guardar'])){
     ('$nombre', '$fecha', '$descripcion', 1)";
     $queryClientes = mysqli_query($conn, $sqlClientes);
 
-    ?>
-    <script>
-        alert('El cliente fue guardado exitosamente.');
-        document.location.href = 'inventario.php';
-    </script>
-    <?php 
+    if ($queryClientes) {
+        // El inventario se guardó con éxito, muestra un mensaje de confirmación con SweetAlert2
+        echo '<script>
+            Swal.fire({
+                title: "Guardado exitosamente",
+                icon: "success",
+                confirmButtonText: "OK"
+            }).then(() => {
+                window.location.href = "inventario.php";
+            });
+        </script>';
+    } else {
+        // Hubo un error al guardar el inventario, muestra un mensaje de error con SweetAlert2
+        echo '<script>
+            Swal.fire({
+                title: "Error al guardar",
+                text: "Hubo un error al guardar el inventario. Por favor, inténtalo de nuevo.",
+                icon: "error",
+                confirmButtonText: "OK"
+            });
+        </script>';
+    }
     exit();
 }
-
 ?>
 
 <div class="card m-4">
