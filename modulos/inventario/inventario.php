@@ -13,34 +13,80 @@ if (isset($_GET['id_eliminar'])){
     exit();
 }
 
-
 include("../../template/top.php");
+
+// Inicializa la variable $queryClientes
+$queryClientes = null;
+
+// Consulta inicial para mostrar todos los registros
+$sqlClientes = "SELECT * FROM tinventario WHERE estado = 1";
+$queryClientes = mysqli_query($conn, $sqlClientes);
 ?>
-  
+
 <div class="card m-4">
   <div class="card-body">
-  <h4>Nuevo INVENTARIO</h4>
+  <h4>NUEVO INVENTARIO</h4>
   <hr>
   <div class="row text-right m-2">
       <div class="col-12">
-          <a href="nuevoInventario.php" class="btn btn-primary"><i class="fas fa-fw fa-folder-plus mr-2"></i>Nuevo Empleado</a>
+          <a href="nuevoInventario.php" class="btn btn-primary"><i class="fas fa-fw fa-folder-plus mr-2"></i>Nuevo Inventario</a>
       </div>
   </div>
 
-  <?php
-  $sqlClientes = "SELECT * FROM tinventario WHERE estado = 1";
-  $queryClientes = mysqli_query($conn, $sqlClientes);
-
-
-  if (mysqli_num_rows($queryClientes) == 0){
-  ?>
-  <div calss="row text-center">
-      <div class="col-12">
-          NO HAY INVENTARIO
+<!-- Formulario de búsqueda por nombre y/o fechas -->
+<form method="POST" action="" class="text-center">
+    <div class="row m-2">
+        <div class="col-3">
+            <label for="nombre" class="animate__animated animate__slideInLeft"><i class="fas fa-fw fa-user animate__animated animate__slideInLeft"></i> Nombre:</label>
+            <input type="text" id="nombre" name="nombre" class="form-control shadow-sm animate__animated animate__zoomIn">
+        </div>
+        <div class="col-3">
+            <label for="fecha_inicio" class="animate__animated animate__slideInLeft"><i class="fas fa-fw fa-calendar-alt animate__animated animate__slideInLeft"></i> Fecha de inicio:</label>
+            <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control shadow-sm animate__animated animate__zoomIn">
+        </div>
+        <div class="col-3">
+            <label for="fecha_fin" class="animate__animated animate__slideInLeft"><i class="fas fa-fw fa-calendar-alt animate__animated animate__slideInLeft"></i> Fecha de fin:</label>
+            <input type="date" id="fecha_fin" name="fecha_fin" class="form-control shadow-sm animate__animated animate__zoomIn">
+        </div>
+        <div class="col-3">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Buscar</button>
+        </div>
       </div>
-  </div>
+</form>
+
   <?php
-  }else{
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $nombre = $_POST['nombre'];
+      $fecha_inicio = $_POST['fecha_inicio'];
+      $fecha_fin = $_POST['fecha_fin'];
+
+      // Construye la consulta SQL basada en los campos completados
+      $sqlClientes = "SELECT * FROM tinventario WHERE estado = 1";
+
+      if (!empty($nombre)) {
+          $sqlClientes .= " AND nombre LIKE '%$nombre%'";
+      }
+
+      if (!empty($fecha_inicio) && !empty($fecha_fin)) {
+          $sqlClientes .= " AND fecha BETWEEN '$fecha_inicio' AND '$fecha_fin'";
+      }
+
+      $queryClientes = mysqli_query($conn, $sqlClientes);
+  }
+  
+  if (!$queryClientes) {
+    echo '<div class="row text-center">
+              <div class="col-12">
+                  NO HAY INVENTARIO
+              </div>
+          </div>';
+  } else if (mysqli_num_rows($queryClientes) == 0) {
+      echo '<div class="row text-center">
+                <div class="col-12">
+                    NO HAY INVENTARIO
+                </div>
+            </div>';
+  } else {
   ?>
   <table class="table table-sm table-striped">
       <thead class="bg-dark text-light">
@@ -98,15 +144,8 @@ include("../../template/top.php");
       });
     });
   </script>
-
-
-
-
   <?php
-
-
   }
-
   ?>
 </div>
 </div>
