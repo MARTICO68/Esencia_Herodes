@@ -6,10 +6,10 @@ revisarPrivilegio(4);
 if (isset($_GET['id_eliminar'])){
     $idEliminar = $_GET['id_eliminar'];
 
-    $sqlEliminar = "UPDATE templeados SET estado = 2 WHERE id = '$idEliminar'";
+    $sqlEliminar = "UPDATE tproyectos SET estado = 2 WHERE id = '$idEliminar'";
     $queryEliminar = mysqli_query($conn, $sqlEliminar);
 
-    header('location: empleados.php');
+    header('location: proyectos.php');
     exit();
 }
 
@@ -19,16 +19,16 @@ include("../../template/top.php");
   
 <div class="card m-4">
   <div class="card-body">
-  <h4>Nuevo Empleado</h4>
+  <h4>Nuevo Proyecto</h4>
   <hr>
   <div class="row text-right m-2">
       <div class="col-12">
-          <a href="nuevoEmpleados.php" class="btn btn-primary"><i class="fas fa-fw fa-folder-plus mr-2"></i>Nuevo Empleado</a>
+          <a href="nuevoproyectos.php" class="btn btn-primary"><i class="fas fa-fw fa-folder-plus mr-2"></i>Nuevo Proyecto</a>
       </div>
   </div>
 
   <?php
-  $sqlClientes = "SELECT * FROM templeados WHERE estado = 1";
+  $sqlClientes = "SELECT * FROM tproyectos WHERE estado = 1";
   $queryClientes = mysqli_query($conn, $sqlClientes);
 
 
@@ -36,20 +36,20 @@ include("../../template/top.php");
   ?>
   <div calss="row text-center">
       <div class="col-12">
-          NO HAY Empleados
+          NO hay Proyectos
       </div>
   </div>
   <?php
   }else{
   ?>
-  <table class="table table-sm table-striped">
+  <div class="table-responsive">
+  <table class="table table-sm table-striped table-bordered">
       <thead class="bg-dark text-light">
           <th></th>
-          <th>Identificación</th>
           <th>Nombre</th>
-          <th>Apellidos</th>
-          <th>Puesto</th>
-          <th>Telefono</th>
+          <th>Descripción</th>
+          <th>Fecha inicial</th>
+          <th>Fecha de finalización</th>
       </thead>
 
       <tbody>
@@ -57,25 +57,25 @@ include("../../template/top.php");
           while($rowClientes=mysqli_fetch_array($queryClientes)){
             ?>
             <tr>
-                <td>
-                    <a href="editarEmpleados.php?id_editar=<?=$rowClientes['id']?>" class="btn btn-secondary"><i class="fa fa-fw fa-pen"></i></a>
+                <td style="min-width:150px">
+                    <a href="editarProyectos.php?id_editar=<?=$rowClientes['id']?>" class="btn-sm btn btn-outline-dark"><i class="fa fa-fw fa-edit"></i></a>
                     <!-- Agrega el SweetAlert2 -->
-                    <a href="#" class="btn btn-danger delete-btn" data-id="<?=$rowClientes['id']?>"><i class="fas fa-fw fa-trash"></i></a>
-                    
+                    <a href="#" class="btn-sm btn btn-danger" data-id="<?=$rowClientes['id']?>"><i class="fas fa-fw fa-trash"></i></a>
+                    <!--
                     <a href="AgregarPlanilla.php?id_editar=<?=$rowClientes['identificacion']?>" class="btn btn-secondary"><i class="fa fa-fw fa-file"></i></a>
+                    -->
                 </td>
-                <td><?=$rowClientes['identificacion']?></td>
                 <td><?=$rowClientes['nombre']?></td>
-                <td><?=$rowClientes['apellidos']?></td>
-                <td><?=$rowClientes['puesto']?></td>
-                <td><?=$rowClientes['telefono']?></td>
+                <td><?=$rowClientes['descripcion']?></td>
+                <td><?=$rowClientes['fechaini']?></td>
+                <td><?=$rowClientes['fechafin']?></td>
             </tr>
             <?php
           }
           ?>
       </tbody>
   </table>
-
+  </div>
   <script>
     // Agrega un evento click a todos los botones de eliminar
     const deleteButtons = document.querySelectorAll(".btn-danger");
@@ -99,18 +99,14 @@ include("../../template/top.php");
         }).then((result) => {
           // Si el usuario hace clic en "Sí, eliminar!", redirige a la página de eliminación
           if (result.isConfirmed) {
-            window.location.href = `empleados.php?id_eliminar=${idEliminar}`;
+            window.location.href = `proyectos.php?id_eliminar=${idEliminar}`;
           }
         });
       });
     });
   </script>
 
-
-
-
   <?php
-
 
   }
 
