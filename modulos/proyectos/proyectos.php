@@ -61,7 +61,7 @@ include("../../template/top.php");
                     <a href="editarProyectos.php?id_editar=<?=$rowClientes['id']?>" class="btn-sm btn btn-outline-dark"><i class="fa fa-fw fa-edit"></i></a>
                     <!-- Agrega el SweetAlert2 -->
                     <a href="#" class="btn-sm btn btn-danger" data-id="<?=$rowClientes['id']?>"><i class="fas fa-fw fa-trash"></i></a>
-                    <a href="planilla.php?id_proyecto=<?=$rowClientes['id']?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-folder"></i></a>
+                    <a href="administracion.php?id_proyecto=<?=$rowClientes['id']?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-folder"></i></a>
                     <!--
                     <a href="AgregarPlanilla.php?id_editar=<?=$rowClientes['identificacion']?>" class="btn btn-secondary"><i class="fa fa-fw fa-file"></i></a>
                     -->

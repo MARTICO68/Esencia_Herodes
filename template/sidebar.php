@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-success sidebar sidebar-dark accordion" id="accordionSidebar">
 <!-- Agrega la librería de SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <style>
@@ -100,7 +100,7 @@
 </a>
 <hr class="sidebar-divider my-0">
 
-<ul class="nav flex-column">
+<ul class="nav flex-column" >
   <li class="nav-item active">
     <a class="nav-link" href="<?php echo $baseURL?>index.php">
       <i class="fas fa-fw fa-laptop-house"></i>

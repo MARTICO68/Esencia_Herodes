@@ -49,7 +49,7 @@ if (isset($_POST['guardar'])){
 
 <div class="card m-4">
     <div class="card-body">
-        <h4>Editar Empleado</h4>
+        <h4>Editar Inventario</h4>
         <hr>
         <div class="row text-right">
             <div class="col-12">

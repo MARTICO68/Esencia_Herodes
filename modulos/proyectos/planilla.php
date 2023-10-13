@@ -1,19 +1,7 @@
 <?php
 include("../../conn/conn.php");
-revisarPrivilegio(4);
-$idProyecto = $_GET['id_proyecto'];
-
-if (isset($_GET['id_eliminar'])){
-    $idEliminar = $_GET['id_eliminar'];
-
-    $sqlEliminar = "UPDATE thoras SET estado = 2 WHERE id = '$idEliminar'";
-    $queryEliminar = mysqli_query($conn, $sqlEliminar);
-
-    header('location: proyectos.php?id_proyecto=' . $idProyecto);
-    exit();
-}
-
 include("../../template/top.php");
+revisarPrivilegio(4);
 
 // Variable para almacenar el valor de búsqueda
 $buscar = '';
@@ -23,34 +11,25 @@ if (isset($_GET['buscar'])) {
 }
 
 // Consulta SQL para buscar registros
-$sql = "SELECT * FROM thoras WHERE estado = 1 AND idProyecto = '$idProyecto'";
+$sql = "SELECT * FROM thoras WHERE estado = 1";
 
 if (!empty($buscar)) {
+    // Modifica la consulta para buscar por nombre
     $sql .= " AND idEmpleado LIKE '%$buscar%'";
 }
 
 $query = mysqli_query($conn, $sql);
 $total = 0; // Inicializa la variable $total
-
 ?>
 
 <div class="card">
     <div class="card-body">
-        <?php
-            $sqlProyecto = "SELECT * FROM tproyectos WHERE id = '$idProyecto'";
-            $queryProyecto = mysqli_query($conn, $sqlProyecto);
-            
-            while($rowProyecto = mysqli_fetch_assoc($queryProyecto)){
-                ?>
-                <div class="row text-center">
-                    <div class="col-12">
-                        <h4>Planilla del proyecto: <?=$rowProyecto['nombre']?></h4>
-                        <hr>
-                    </div>
-                </div>
-                <?php
-            }
-        ?>
+        <div class="row text-center">
+            <div class="col-12">
+                <h4>Registro de Horas de Trabajo</h4>
+                <hr>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12 text-right p-2 mb-2">
                 <a href="proyectos.php" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar </a>
@@ -58,10 +37,12 @@ $total = 0; // Inicializa la variable $total
         </div>
 
         <form action="" method="get">
-            <div class="row text-right">
-                <div class="col-8 col-md-4 pt-2">
-                    <input type="text" name="buscar" placeholder="Digite el nombre y presione enter" class="form-control" autocomplete="off" value="<?=$buscar?>">
-                    <button type="submit" class="btn btn-sm"></button>
+            <div class="row text-left">
+                <div class="col-3">
+                    <input type="text" name="buscar" placeholder="Buscar por nombre" class="form-control" autocomplete="off" value="<?=$buscar?>">
+                </div>
+                <div class="col-9">
+                    <button type="submit" class="btn btn-dark">Buscar</button>
                 </div>
             </div>
         </form>
@@ -71,10 +52,10 @@ $total = 0; // Inicializa la variable $total
             ?>
             <div class="row text-center">
                 <div class="col-12">
-                    <a href="NP.php?id_proyecto=<?=$idProyecto?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a> 
+                    <a href="NP.php" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a> 
                     <br>              
                     <img class="img-fluid" src="<?=$baseURL?>img/nohay.gif" ><br>         
-                    No hay planillas en este proyecto.  
+                    No hay registros de horas de trabajo.  
                 </div>
             </div>
             <?php
@@ -84,9 +65,8 @@ $total = 0; // Inicializa la variable $total
                 <table class="table table-striped table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <th style="min-width:150px">
-                            <a href="NP.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a>
-                            <a href="gastos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-building"></i></a>
-                            <a href="excel.php?id_proyecto=<?=$idProyecto?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-file"></i></a>
+                            <a href="NP.php" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a>
+                            <a href="reportesPla.php?<?=urlencode('id_proyecto=' .$_GET['id_proyecto'])?>" class="btn-sm btn btn-outline-danger"><i class="fas fa-fw fa-download"></i></a>
                         </th>
                         <th>Nombre</th>
                         <th>Fecha</th>
@@ -106,7 +86,7 @@ $total = 0; // Inicializa la variable $total
                             <td><?=$rowClientes['fecha']?></td>
                             <td><?=$rowClientes['numero']?></td>
                             <td><?=$rowClientes['precio']?></td>
-                            <td><?=($rowClientes['total'])?></td>
+                            <td><?=$rowClientes['total']?></td>
                             <td class="text-right">
                                 <?php
                                 echo '&cent; '.number_format($subtotal = $rowClientes['total'],2);
