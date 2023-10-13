@@ -14,10 +14,12 @@ ob_start();
 <body>
 <?php
 include("../../conn/conn.php");
-$idProyecto = $_GET['id_proyecto'];
-$sql = "SELECT * FROM thoras WHERE estado = 1 AND idProyecto = '$idProyecto'";
+$idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : ''; 
+$sql = "SELECT * FROM thoras WHERE estado = 1 AND estado = 1";
 $query = mysqli_query($conn, $sql);
+$total = 0;
 ?>
+
 <h2 class="text-center">Reporte Planilla</h2>
 <div class="table-responsive">
 <table class="table table-striped table-bordered">
@@ -83,5 +85,5 @@ $dompdf->setPaper('letter');
 //$dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
 
-$dompdf->stream("archivo_.pdf", array("Attachment" => false));
+$dompdf->stream("archivo_.pdf", array("Attachment"=>false));
 ?>
