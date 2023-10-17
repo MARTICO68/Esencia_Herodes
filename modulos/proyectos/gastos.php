@@ -16,6 +16,34 @@ if (isset($_GET['id_eliminar'])){
 }
 $total = 0;
 include("../../template/top.php");
+
+
+
+// Consulta SQL para buscar registros
+$sql = "SELECT * FROM tgastos WHERE estado = 1 AND idProyecto = '$idProyecto'";
+
+if (!empty($buscar)) {
+    $sql .= " AND idEmpleado LIKE '%$buscar%'";
+}
+
+$query = mysqli_query($conn, $sql);
+
+// Calcular el total de gastos de planilla
+$totalGastos = 0;
+while ($rowClientes = mysqli_fetch_assoc($query)) {
+    $totalGastos += $rowClientes['gasto'];
+}
+
+// Consulta SQL para obtener el monto_total de la tabla tplanillas
+$sqlMontoTotal = "SELECT gasto FROM tgastos WHERE idProyecto = '$idProyecto'";
+$queryMontoTotal = mysqli_query($conn, $sqlMontoTotal);
+
+// Obtiene el valor de monto_total
+$montoTotal1 = 0;
+
+
+// Calcular el total final sumando el montoTotal y los gastos de planilla
+$totalFinal2 = $montoTotal1 + $totalGastos;
 ?>
 
 <div class="card">
@@ -86,8 +114,7 @@ include("../../template/top.php");
                             <th>Fecha</th>
                             <th>Cantidad</th>   
                             <th>Costo</th>
-                            <th>Gasto</th>
-                            <th>Ingresos</th>                       
+                            <th>Gasto</th>                       
                             <th>Subtotal</th>                          
                         </thead>
                         <tbody>
@@ -102,11 +129,10 @@ include("../../template/top.php");
                                 <td><?=$rowClientes['cantidad']?></td>
                                 <td><?=$rowClientes['costo']?></td>
                                 <td><?=$rowClientes['gasto']?></td>
-                                <td><?=$rowClientes['ingresos']?></td>
                                 <td class="text-right">
                                 <?php
-                                echo '&cent; '.number_format($subtotal = $rowClientes['ingresos'] - $rowClientes['gasto'],2);
-                                $total += $subtotal;
+                                echo '&cent; '.number_format($subtotal = $rowClientes['gasto'],2);
+                                $total = $subtotal;
                                 ?>
                                 </td>
                             </tr>
@@ -116,10 +142,9 @@ include("../../template/top.php");
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
                                 <td></td>                                                          
-                                <td class="text-right"><strong>Total de Gastos / Ganancias</strong></td>
-                                <td class="text-right"><strong>&cent; <?=number_format($total,2)?></strong> </td>
+                                <td class="text-right"><strong>Total de Gastos</strong></td>
+                                <td class="text-right"><strong>&cent; <?=number_format($totalFinal2,2)?></strong> </td>
                             </tr>
                         </tbody>
                     </table>

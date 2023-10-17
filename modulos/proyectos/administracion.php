@@ -47,6 +47,45 @@ $montoTotal = 0;
 
 // Calcular el total final sumando el montoTotal y los gastos de planilla
 $totalFinal = $montoTotal + $totalGastosPlanilla;
+
+
+
+
+
+
+
+
+
+
+// Consulta SQL para buscar registros
+$sql = "SELECT * FROM tgastos WHERE estado = 1 AND idProyecto = '$idProyecto'";
+
+if (!empty($buscar)) {
+    $sql .= " AND idEmpleado LIKE '%$buscar%'";
+}
+
+$query = mysqli_query($conn, $sql);
+
+// Calcular el total de gastos de planilla
+$totalGastos = 0;
+while ($rowClientes = mysqli_fetch_assoc($query)) {
+    $totalGastos += $rowClientes['gasto'];
+}
+
+// Consulta SQL para obtener el monto_total de la tabla tplanillas
+$sqlMontoTotal = "SELECT gasto FROM tgastos WHERE idProyecto = '$idProyecto'";
+$queryMontoTotal = mysqli_query($conn, $sqlMontoTotal);
+
+// Obtiene el valor de monto_total
+$montoTotal1 = 0;
+
+
+// Calcular el total final sumando el montoTotal y los gastos de planilla
+$totalFinal2 = $montoTotal1 + $totalGastos;
+
+$totalFin = $totalFinal2 + $totalFinal;
+
+ 
 ?>
 
 <div class="card">
@@ -105,8 +144,8 @@ $totalFinal = $montoTotal + $totalGastosPlanilla;
                         </th>
                         <th>Gasto de Planillas</th>
                         <th>Gasto de Materiales</th>
-                        
-                        <th>Total</th>
+                        <th>Total de Gastos</th>
+                        <th>Total de Ingresos</th>
                         <th>Subtotal</th>
                     </thead>
                     <tbody>
@@ -128,7 +167,8 @@ $totalFinal = $montoTotal + $totalGastosPlanilla;
                         <tr>
                             <td class="text-right"><strong>Total</strong></td>
                             <td class="text-right"><strong>&cent; <?=number_format($totalFinal, 2)?></strong></td>
-                            <td></td>
+                            <td class="text-right"><strong>&cent; <?=number_format($totalFinal2, 2)?></strong></td>
+                            <td class="text-right"><strong>&cent; <?=number_format($totalFin, 2)?></strong></td>
                             <td></td>
                             <td></td>
                             
