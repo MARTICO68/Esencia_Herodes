@@ -1,7 +1,7 @@
 <?php
 include("../../conn/conn.php");
 revisarPrivilegio(4);
-$idProyecto = $_GET['id_proyecto'];
+$idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '';
 
 if (isset($_GET['id_eliminar'])){
     $idEliminar = $_GET['id_eliminar'];
@@ -54,37 +54,6 @@ $totalFinal = $montoTotal + $totalGastosPlanilla;
 
 
 
-
-
-
-// Consulta SQL para buscar registros
-$sql = "SELECT * FROM tgastos WHERE estado = 1 AND idProyecto = '$idProyecto'";
-
-if (!empty($buscar)) {
-    $sql .= " AND idEmpleado LIKE '%$buscar%'";
-}
-
-$query = mysqli_query($conn, $sql);
-
-// Calcular el total de gastos de planilla
-$totalGastos = 0;
-while ($rowClientes = mysqli_fetch_assoc($query)) {
-    $totalGastos += $rowClientes['gasto'];
-}
-
-// Consulta SQL para obtener el monto_total de la tabla tplanillas
-$sqlMontoTotal = "SELECT gasto FROM tgastos WHERE idProyecto = '$idProyecto'";
-$queryMontoTotal = mysqli_query($conn, $sqlMontoTotal);
-
-// Obtiene el valor de monto_total
-$montoTotal1 = 0;
-
-
-// Calcular el total final sumando el montoTotal y los gastos de planilla
-$totalFinal2 = $montoTotal1 + $totalGastos;
-
-$totalFin = $totalFinal2 + $totalFinal;
-
  
 ?>
 
@@ -111,21 +80,14 @@ $totalFin = $totalFinal2 + $totalFinal;
             </div>
         </div>
 
-        <form action="" method="get">
-            <div class="row text-right">
-                <div class="col-8 col-md-4 pt-2">
-                    <input type="text" name="buscar" placeholder="Digite el nombre y presione enter" class="form-control" autocomplete="off" value="<?=$buscar?>">
-                    <button type="submit" class="btn btn-sm"></button>
-                </div>
-            </div>
-        </form>
-
         <?php
         if (mysqli_num_rows($query) == 0){
             ?>
             <div class="row text-center">
                 <div class="col-12">
-                    <a href="NP.php?id_proyecto=<?=$idProyecto?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a> 
+                    <a href="planilla.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-table"></i></a>
+                    <a href="gastos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-building"></i></a>
+                    <a href="ingresos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-money-bill"></i></a>
                     <br>              
                     <img class="img-fluid" src="<?=$baseURL?>img/nohay.gif" ><br>         
                     No hay planillas en este proyecto.  
@@ -140,6 +102,7 @@ $totalFin = $totalFinal2 + $totalFinal;
                         <th style="min-width:150px">
                             <a href="planilla.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-table"></i></a>
                             <a href="gastos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-building"></i></a>
+                            <a href="ingresos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-money-bill"></i></a>
                             <a href="excel.php?id_proyecto=<?=$idProyecto?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-file"></i></a>
                         </th>
                         <th>Gasto de Planillas</th>
@@ -167,8 +130,8 @@ $totalFin = $totalFinal2 + $totalFinal;
                         <tr>
                             <td class="text-right"><strong>Total</strong></td>
                             <td class="text-right"><strong>&cent; <?=number_format($totalFinal, 2)?></strong></td>
-                            <td class="text-right"><strong>&cent; <?=number_format($totalFinal2, 2)?></strong></td>
-                            <td class="text-right"><strong>&cent; <?=number_format($totalFin, 2)?></strong></td>
+                            <td ></td>
+                            <td ></td>
                             <td></td>
                             <td></td>
                             

@@ -9,9 +9,10 @@ if(isset($_POST['guardar'])){
     $fecha  = $_POST['fecha'];
     $numero = $_POST['numero'];
     $precio = $_POST['precio'];
+    $total = $_POST['total'];
 
-    $sqlClientes = "INSERT INTO tingresos (idProyecto, fecha, numero, precio, estado) VALUES
-    ('$idProyecto', '$fecha', '$numero', '$precio', 1)";
+    $sqlClientes = "INSERT INTO tingresos (idProyecto, fecha, numero, precio, total, estado) VALUES
+    ('$idProyecto', '$fecha', '$numero', '$precio', '$total', 1)";
     $queryClientes = mysqli_query($conn, $sqlClientes);
     
     ?>
@@ -49,8 +50,8 @@ include("../../template/top.php");
            
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="cajuelas"># de fanegas</label>
-                        <input type="number" id="cajuelas" oninput="calcular()" step="0.001" name="numero" required type="number" class="form-control" autocomplete="off">       
+                        <label for="numero"># de fanegas</label>
+                        <input type="number" id="numero" oninput="calcular()" step="0.001" name="numero" required type="number" class="form-control" autocomplete="off">       
                     </div>
                     <br>
                     <body>                                                                    
@@ -71,7 +72,7 @@ include("../../template/top.php");
 
                         function calcular(){
                     try{ 
-                        var a = parseFloat(document.getElementById("cajuelas").value) || 0,
+                        var a = parseFloat(document.getElementById("numero").value) || 0,
                             b = parseFloat(document.getElementById("precio").value) || 0;
                             document.getElementById("total").value = a * b;
                     } catch (e) {}

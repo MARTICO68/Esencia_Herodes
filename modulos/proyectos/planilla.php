@@ -2,7 +2,7 @@
 include("../../conn/conn.php");
 include("../../template/top.php");
 revisarPrivilegio(4);
-
+$idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '';
 // Variable para almacenar el valor de búsqueda
 $buscar = '';
 
@@ -11,7 +11,7 @@ if (isset($_GET['buscar'])) {
 }
 
 // Consulta SQL para buscar registros
-$sql = "SELECT * FROM thoras WHERE estado = 1";
+$sql = "SELECT * FROM thoras WHERE estado = 1 AND idProyecto = '$idProyecto'";
 
 if (!empty($buscar)) {
     // Modifica la consulta para buscar por nombre

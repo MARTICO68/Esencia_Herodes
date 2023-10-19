@@ -2,6 +2,7 @@
 include("../../conn/conn.php");
 include("../../template/top.php");
 revisarPrivilegio(4);
+$idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '';
 
 // Variable para almacenar el valor de búsqueda
 $buscar = '';
@@ -19,7 +20,7 @@ if (!empty($buscar)) {
 }
 
 $query = mysqli_query($conn, $sql);
-$total1 = 0; // Inicializa la variable $total
+$total = 0; // Inicializa la variable $total
 ?>
 
 <div class="card">
@@ -52,7 +53,7 @@ $total1 = 0; // Inicializa la variable $total
             ?>
             <div class="row text-center">
                 <div class="col-12">
-                    <a href="NI.php" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a> 
+                    <a href="NI.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a>
                     <br>              
                     <img class="img-fluid" src="<?=$baseURL?>img/nohay.gif" ><br>         
                     No hay registros de ingresos.  
