@@ -33,7 +33,7 @@
         <hr>
     <div class="row text-right">
         <div class="col-12">
-            <a href="planilla.php?id_proyecto=<?=urlencode($_GET['id_proyecto'])?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar</a>
+            <a href="planilla.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar </a>
         </div>
     </div>
     <div class="row">

@@ -86,7 +86,7 @@ $totalFinal2 = $montoTotal1 + $totalGastos;
         ?>
         <div class="row text-right p-2 mb-2">
             <div class="col-12">
-                <a href="planilla.php?id_proyecto=<?=urlencode($_GET['id_proyecto'])?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar</a>
+                <a href="administracion.php?id_proyecto=<?=urlencode($_GET['id_proyecto'])?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar</a>
             </div>
         </div>
         <?php

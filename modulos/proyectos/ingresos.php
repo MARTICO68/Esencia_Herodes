@@ -33,7 +33,7 @@ $total = 0; // Inicializa la variable $total
         </div>
         <div class="row">
             <div class="col-12 text-right p-2 mb-2">
-                <a href="administracion.php" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar </a>
+                <a href="administracion.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar </a>
             </div>
         </div>
 

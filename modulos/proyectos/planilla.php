@@ -32,7 +32,7 @@ $total = 0; // Inicializa la variable $total
         </div>
         <div class="row">
             <div class="col-12 text-right p-2 mb-2">
-                <a href="proyectos.php" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar </a>
+                <a href="administracion.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar </a>
             </div>
         </div>
 
@@ -65,7 +65,7 @@ $total = 0; // Inicializa la variable $total
                 <table class="table table-striped table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <th style="min-width:150px">
-                            <a href="NP.php" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a>
+                            <a href="NP.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a>
                             <a href="reportesPla.php?<?=urlencode('id_proyecto=' .$_GET['id_proyecto'])?>" class="btn-sm btn btn-outline-danger"><i class="fas fa-fw fa-download"></i></a>
                         </th>
                         <th>Nombre</th>
