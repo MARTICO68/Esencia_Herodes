@@ -13,6 +13,7 @@
 
     <!-- Custom fonts for this template-->
     <script src="https://kit.fontawesome.com/839b3d030d.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">

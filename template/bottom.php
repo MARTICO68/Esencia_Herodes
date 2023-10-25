@@ -50,6 +50,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="<?=$baseURL?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="<?=$baseURL?>vendor/jquery-easing/jquery.easing.min.js"></script>

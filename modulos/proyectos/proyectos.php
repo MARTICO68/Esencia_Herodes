@@ -78,10 +78,10 @@ include("../../template/top.php");
         deleteButton.addEventListener("click", function(event) {
           // Previene el comportamiento predeterminado del enlace
           event.preventDefault();
-          
+
           // Obtiene el ID del cliente a eliminar
           const idEliminar = this.dataset.id;
-          
+
           // Muestra un mensaje de confirmación con SweetAlert2
           Swal.fire({
             title: '¿Está seguro(a) que desea eliminar?',
@@ -111,19 +111,8 @@ include("../../template/top.php");
   <div class="card-body">
     <h4>Gastos e Ingresos por Proyecto</h4>
     <hr>
-    <?php
-    $sqlProyectos = "SELECT p.id, p.nombre, p.descripcion, p.fechaini, p.fechafin, 
-                     SUM(g.gasto) AS total_gastos, SUM(i.total) AS total_ingresos
-                     FROM tproyectos p
-                     LEFT JOIN tgastos g ON p.id = g.idProyecto
-                     LEFT JOIN tingresos i ON p.id = i.idProyecto
-                     WHERE p.estado = 1
-                     GROUP BY p.id";
-    $queryProyectos = mysqli_query($conn, $sqlProyectos);
-    if (mysqli_num_rows($queryProyectos) > 0) {
-    ?>
     <div class="table-responsive">
-      <table class="table table-sm table-striped table-bordered">
+      <table id="tabla-proyectos" class="table table-sm table-striped table-bordered">
         <thead class="bg-dark text-light">
           <th>Proyecto</th>
           <th>Total Gastos</th>
@@ -131,27 +120,47 @@ include("../../template/top.php");
           <th>Subtotal</th>
         </thead>
         <tbody>
-          <?php
-          while($rowProyecto = mysqli_fetch_array($queryProyectos)){
-            ?>
-            <tr>
-              <td><?= $rowProyecto['nombre'] ?></td>
-              <td><?= $rowProyecto['total_gastos'] ?></td>
-              <td><?= $rowProyecto['total_ingresos'] ?></td>
-              <td><?= $rowProyecto['total_gastos'] - $rowProyecto['total_ingresos'] ?></td>
-            </tr>
-            <?php
-          }
-          ?>
+          <!-- Aquí se llenarán los datos con JavaScript y AJAX -->
         </tbody>
       </table>
     </div>
-    <?php
-    }
-    ?>
   </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function actualizarTabla() {
+    $.ajax({
+      type: 'GET',
+      url: 'actualizarDatos.php', // URL del archivo PHP que devuelve los datos actualizados
+      dataType: 'json',
+      success: function (data) {
+        // Limpia la tabla actual
+        $('#tabla-proyectos tbody').empty();
+
+        // Recorre los datos y actualiza la tabla
+        $.each(data, function (index, proyecto) {
+          $('#tabla-proyectos tbody').append(
+            '<tr>' +
+            '<td>' + proyecto.nombre + '</td>' +
+            '<td>' + proyecto.totalGastos + '</td>' +
+            '<td>' + proyecto.totalIngresos + '</td>' +
+            '<td>' + proyecto.subtotal + '</td>' +
+            '</tr>'
+          );
+        });
+      }
+    });
+  }
+
+  // Llama a la función para actualizar la tabla cuando se carga la página y cada 60 segundos
+  $(document).ready(function () {
+    actualizarTabla();
+    setInterval(actualizarTabla, 60000); // Actualizar cada 60 segundos
+  });
+</script>
 
 <?php
 include("../../template/bottom.php");
 ?>
+

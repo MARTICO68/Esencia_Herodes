@@ -1,9 +1,21 @@
 <?php
 include("../../conn/conn.php");
-include("../../template/top.php");
+
 revisarPrivilegio(4);
 $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '';
 // Variable para almacenar el valor de búsqueda
+
+if (isset($_GET['id_eliminar'])){
+    $idEliminar = $_GET['id_eliminar'];
+
+    $sqlEliminar = "UPDATE thoras SET estado = 2 WHERE id = '$idEliminar'";
+    $queryEliminar = mysqli_query($conn, $sqlEliminar);
+
+    header("location: planilla.php?id_proyecto=$idProyecto");
+    exit();
+}
+include("../../template/top.php");
+
 $buscar = '';
 
 if (isset($_GET['buscar'])) {
