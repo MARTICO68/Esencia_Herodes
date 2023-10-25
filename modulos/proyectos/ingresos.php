@@ -12,7 +12,7 @@ if (isset($_GET['buscar'])) {
 }
 
 // Consulta SQL para buscar registros
-$sql = "SELECT * FROM tingresos WHERE estado = 1";
+$sql = "SELECT * FROM tingresos WHERE estado = 1 AND idProyecto = '$idProyecto'";
 
 if (!empty($buscar)) {
     // Modifica la consulta para buscar por nombre

@@ -95,8 +95,10 @@ $totalFinal2 = $montoTotal1 + $totalGastos;
             if (mysqli_num_rows($query) == 0){
                 ?>
                 <div class="row text-center">
-                    <div class="col-12">       
-                        <img class="img-fluid" src="<?=$baseURL?>img/nohay.gif" ><br>           
+                    <div class="col-12">   
+                        <a href="NG.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a> 
+                        <br>              
+                        <img class="img-fluid" src="<?=$baseURL?>img/nohay.gif" ><br>          
                         No hay gastos en este proyecto.  
                     </div>
                 </div>

@@ -52,7 +52,7 @@ $total = 0; // Inicializa la variable $total
             ?>
             <div class="row text-center">
                 <div class="col-12">
-                    <a href="NP.php" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a> 
+                    <a href="NP.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a> 
                     <br>              
                     <img class="img-fluid" src="<?=$baseURL?>img/nohay.gif" ><br>         
                     No hay registros de horas de trabajo.  
