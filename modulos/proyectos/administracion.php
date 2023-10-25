@@ -22,39 +22,43 @@ if (isset($_GET['buscar'])) {
     $buscar = $_GET['buscar'];
 }
 
-// Consulta SQL para buscar registros
-$sql = "SELECT * FROM thoras WHERE estado = 1 AND idProyecto = '$idProyecto'";
+// Consulta SQL para buscar registros en la tabla thoras
+$sqlHoras = "SELECT * FROM thoras WHERE estado = 1 AND idProyecto = '$idProyecto'";
 
 if (!empty($buscar)) {
-    $sql .= " AND idEmpleado LIKE '%$buscar%'";
+    $sqlHoras .= " AND idEmpleado LIKE '%$buscar%'";
 }
 
-$query = mysqli_query($conn, $sql);
+$queryHoras = mysqli_query($conn, $sqlHoras);
+
+// Consulta SQL para buscar registros en la tabla tgastos
+$sqlGastos = "SELECT * FROM tgastos WHERE idProyecto = '$idProyecto'";
+$queryGastos = mysqli_query($conn, $sqlGastos);
+
+// Consulta SQL para buscar registros en la tabla tingresos
+$sqlIngresos = "SELECT * FROM tingresos WHERE idProyecto = '$idProyecto'";
+$queryIngresos = mysqli_query($conn, $sqlIngresos);
 
 // Calcular el total de gastos de planilla
 $totalGastosPlanilla = 0;
-while ($rowClientes = mysqli_fetch_assoc($query)) {
+while ($rowClientes = mysqli_fetch_assoc($queryHoras)) {
     $totalGastosPlanilla += $rowClientes['total'];
 }
 
-// Consulta SQL para obtener el monto_total de la tabla tplanillas
-$sqlMontoTotal = "SELECT total FROM thoras WHERE idProyecto = '$idProyecto'";
-$queryMontoTotal = mysqli_query($conn, $sqlMontoTotal);
+// Calcular el total de gastos de materiales
+$totalGastosMateriales = 0;
+while ($rowGastos = mysqli_fetch_assoc($queryGastos)) {
+    $totalGastosMateriales += $rowGastos['gasto'];
+}
 
-// Obtiene el valor de monto_total
-$montoTotal = 0;
+// Calcular el total de ingresos
+$totalIngresos = 0;
+while ($rowIngresos = mysqli_fetch_assoc($queryIngresos)) {
+    $totalIngresos += $rowIngresos['total'];
+}
 
-
-// Calcular el total final sumando el montoTotal y los gastos de planilla
-$totalFinal = $montoTotal + $totalGastosPlanilla;
-
-
-
-
-
-
-
- 
+// Calcular el total final sumando los gastos de planilla, gastos de materiales e ingresos
+$totalFinal = $totalGastosPlanilla + $totalGastosMateriales - $totalIngresos;
 ?>
 
 <div class="card">
@@ -80,68 +84,32 @@ $totalFinal = $montoTotal + $totalGastosPlanilla;
             </div>
         </div>
 
-        <?php
-        if (mysqli_num_rows($query) == 0){
-            ?>
-            <div class="row text-center">
-                <div class="col-12">
-                    <a href="planilla.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-table"></i></a>
-                    <a href="gastos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-building"></i></a>
-                    <a href="ingresos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-money-bill"></i></a>
-                    <br>              
-                    <img class="img-fluid" src="<?=$baseURL?>img/nohay.gif" ><br>         
-                    No hay planillas en este proyecto.  
-                </div>
-            </div>
-            <?php
-        } else {
-            ?>
-            <div class="table-responsive">
-                <table class="table table-sm table-striped table-bordered">
-                    <thead>
-                        <th style="min-width:150px">
-                            <a href="planilla.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-table"></i></a>
-                            <a href="gastos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-building"></i></a>
-                            <a href="ingresos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-money-bill"></i></a>
-                            <a href="excel.php?id_proyecto=<?=$idProyecto?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-file"></i></a>
-                        </th>
-                        <th>Gasto de Planillas</th>
-                        <th>Gasto de Materiales</th>
-                        <th>Total de Gastos</th>
-                        <th>Total de Ingresos</th>
-                        <th>Subtotal</th>
-                    </thead>
-                    <tbody>
-                        <?php while($rowClientes = mysqli_fetch_assoc($query)){ ?>
-                        <tr>
-                            <td style="min-width:150px">
-                                
-                            </td>
-                            <td><?=$rowClientes['idEmpleado']?></td>
-                            <td><?=$rowClientes['fecha']?></td>
-                            <td><?=$rowClientes['total']?></td>
-                            <td class="text-right">
-                                <?php
-                                echo '&cent; '.number_format($subtotal = $rowClientes['total'],2);
-                                ?>
-                            </td>
-                        </tr>
-                        <?php } ?>
-                        <tr>
-                            <td class="text-right"><strong>Total</strong></td>
-                            <td class="text-right"><strong>&cent; <?=number_format($totalFinal, 2)?></strong></td>
-                            <td ></td>
-                            <td ></td>
-                            <td></td>
-                            <td></td>
-                            
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        <?php
-        }
-        ?>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped table-bordered">
+                <thead>
+                    <th style="min-width:150px">
+                        <a href="planilla.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-table"></i></a>
+                        <a href="gastos.php?id_proyecto=<?=urlencode($idProyecto)?>" class= "btn-sm btn btn-outline-success"><i class="fas fa-fw fa-building"></i></a>
+                        <a href="ingresos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-money-bill"></i></a>
+                        <a href="excel.php?id_proyecto=<?=$idProyecto?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-file"></i></a>
+                    </th>
+                    <th>Gasto de Planillas</th>
+                    <th>Gasto de Materiales</th>
+                    <th>Total de Ingresos</th>
+                    <th>Subtotal</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="min-width:150px">
+                        </td>
+                        <td><?=$totalGastosPlanilla?></td>
+                        <td><?=$totalGastosMateriales?></td>
+                        <td><?=$totalIngresos?></td>
+                        <td><?=$totalFinal?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
