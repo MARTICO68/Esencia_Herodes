@@ -3,6 +3,12 @@ include("../../conn/conn.php");
 revisarPrivilegio(4);
 $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '';
 
+$idProyectoEncriptado = base64_encode($idProyecto);
+
+
+
+
+
 if (isset($_GET['id_eliminar'])){
     $idEliminar = $_GET['id_eliminar'];
 
@@ -32,11 +38,11 @@ if (!empty($buscar)) {
 $queryHoras = mysqli_query($conn, $sqlHoras);
 
 // Consulta SQL para buscar registros en la tabla tgastos
-$sqlGastos = "SELECT * FROM tgastos WHERE idProyecto = '$idProyecto'";
+$sqlGastos = "SELECT * FROM tgastos WHERE estado = 1 AND idProyecto = '$idProyecto'";
 $queryGastos = mysqli_query($conn, $sqlGastos);
 
 // Consulta SQL para buscar registros en la tabla tingresos
-$sqlIngresos = "SELECT * FROM tingresos WHERE idProyecto = '$idProyecto'";
+$sqlIngresos = "SELECT * FROM tingresos WHERE estado = 1 AND idProyecto = '$idProyecto'";
 $queryIngresos = mysqli_query($conn, $sqlIngresos);
 
 // Calcular el total de gastos de planilla
@@ -88,9 +94,9 @@ $totalFinal = $totalGastosPlanilla + $totalGastosMateriales - $totalIngresos;
             <table class="table table-sm table-striped table-bordered">
                 <thead>
                     <th style="min-width:150px">
-                        <a href="planilla.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-table"></i></a>
-                        <a href="gastos.php?id_proyecto=<?=urlencode($idProyecto)?>" class= "btn-sm btn btn-outline-success"><i class="fas fa-fw fa-building"></i></a>
-                        <a href="ingresos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-money-bill"></i></a>
+                        <a href="planilla.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-table"></i></a>
+                        <a href="gastos.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class= "btn-sm btn btn-outline-success"><i class="fas fa-fw fa-building"></i></a>
+                        <a href="ingresos.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-money-bill"></i></a>
                         <a href="excel.php?id_proyecto=<?=$idProyecto?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-file"></i></a>
                     </th>
                     <th>Gasto de Planillas</th>

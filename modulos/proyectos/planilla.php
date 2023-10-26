@@ -3,6 +3,15 @@ include("../../conn/conn.php");
 
 revisarPrivilegio(4);
 $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '';
+$idProyectoEncriptado = base64_encode($idProyecto);
+if (isset($_GET['id_proyecto'])) {
+    // Recupera el ID del proyecto desde la URL y desencripta usando base64_decode
+    $idProyectoEncriptado = $_GET['id_proyecto'];
+    $idProyecto = base64_decode($idProyectoEncriptado);
+
+    // Ahora, $idProyecto contiene el ID del proyecto desencriptado y puedes utilizarlo en tu página.
+}
+
 // Variable para almacenar el valor de búsqueda
 
 if (isset($_GET['id_eliminar'])){
@@ -77,7 +86,7 @@ $total = 0; // Inicializa la variable $total
                 <table class="table table-striped table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <th style="min-width:150px">
-                            <a href="NP.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a>
+                            <a href="NP.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a>
                             <a href="reportesPla.php?<?=urlencode('id_proyecto=' .$_GET['id_proyecto'])?>" class="btn-sm btn btn-outline-danger"><i class="fas fa-fw fa-download"></i></a>
                         </th>
                         <th>Nombre</th>

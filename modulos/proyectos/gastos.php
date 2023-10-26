@@ -1,19 +1,49 @@
 <?php
 include("../../conn/conn.php");
 revisarPrivilegio(4);
-$fecha_de = '';
-$fecha_a = '';
+
+// Asegúrate de que $idProyecto se haya definido correctamente antes de usarlo.
 $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '';
+$idProyectoEncriptado = base64_encode($idProyecto);
 
-if (isset($_GET['id_eliminar'])){
+if (isset($_GET['id_proyecto'])) {
+    // Recupera el ID del proyecto desde la URL y desencripta usando base64_decode
+    $idProyectoEncriptado = $_GET['id_proyecto'];
+    $idProyecto = base64_decode($idProyectoEncriptado);
+
+    // Ahora, $idProyecto contiene el ID del proyecto desencriptado y puedes utilizarlo en tu página.
+}
+
+// Verifica si se debe eliminar un registro
+if (isset($_GET['id_eliminar'])) {
     $idEliminar = $_GET['id_eliminar'];
-
+    // Realiza la eliminación y luego redirige
     $sqlEliminar = "UPDATE tgastos SET estado = 2 WHERE id = '$idEliminar'";
     $queryEliminar = mysqli_query($conn, $sqlEliminar);
-
-    header('location: proyectos.php?id_proyecto');
-    exit();
+    if ($queryEliminar) {
+        header("location: gastos.php?id_proyecto=$idProyecto");
+        exit();
+    } else {
+        // Manejar error si la consulta de eliminación falla
+        echo "Error al eliminar el registro: " . mysqli_error($conn);
+    }
 }
+
+// Genera la consulta SQL para buscar registros
+$sql = "SELECT * FROM tgastos WHERE estado = 1 AND idProyecto = '$idProyecto'";
+
+// Añade condiciones adicionales según lo que necesites
+if (!empty($buscar)) {
+    $sql .= " AND idEmpleado LIKE '%$buscar%'";
+}
+
+$query = mysqli_query($conn, $sql);
+
+if (!$query) {
+    // Manejar error si la consulta falla
+    echo "Error en la consulta: " . mysqli_error($conn);
+}
+
 $total = 0;
 include("../../template/top.php");
 
@@ -69,7 +99,17 @@ $totalFinal2 = $montoTotal1 + $totalGastos;
             }
           
         }
-        $idProyecto = $_GET['id_proyecto'];
+        $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '';
+        $idProyectoEncriptado = base64_encode($idProyecto);
+
+        if (isset($_GET['id_proyecto'])) {
+            // Recupera el ID del proyecto desde la URL y desencripta usando base64_decode
+            $idProyectoEncriptado = $_GET['id_proyecto'];
+            $idProyecto = base64_decode($idProyectoEncriptado);
+
+            // Ahora, $idProyecto contiene el ID del proyecto desencriptado y puedes utilizarlo en tu página.
+        }
+
         $sql = "SELECT * FROM tproyectos WHERE id = '$idProyecto'";
         $query = mysqli_query($conn, $sql);
 
@@ -96,7 +136,7 @@ $totalFinal2 = $montoTotal1 + $totalGastos;
                 ?>
                 <div class="row text-center">
                     <div class="col-12">   
-                        <a href="NG.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a> 
+                        <a href="NG.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a> 
                         <br>              
                         <img class="img-fluid" src="<?=$baseURL?>img/nohay.gif" ><br>          
                         No hay gastos en este proyecto.  

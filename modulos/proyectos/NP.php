@@ -2,8 +2,14 @@
    include("../../conn/conn.php");
    revisarPrivilegio(4);
    $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : ''; // Establece un valor predeterminado si no se proporciona en la URL
+   $idProyectoEncriptado = base64_encode($idProyecto);
+   if (isset($_GET['id_proyecto'])) {
+    // Recupera el ID del proyecto desde la URL y desencripta usando base64_decode
+    $idProyectoEncriptado = $_GET['id_proyecto'];
+    $idProyecto = base64_decode($idProyectoEncriptado);
 
-
+    // Ahora, $idProyecto contiene el ID del proyecto desencriptado y puedes utilizarlo en tu página.
+}
    if (isset($_POST['guardar'])){
     $idPro= $_POST['idProyecto'];
     $idEmpleado = $_POST['idEmpleado'];    
@@ -19,7 +25,7 @@
         ?>
         <script>          
             alert('Planilla guardada correctamente.');
-            document.location.href = "planilla.php?id_proyecto=<?= $idProyecto ?>";
+            document.location.href = "planilla.php?id_proyecto=<?= $idProyectoEncriptado ?>";
         </script>
         <?php
         exit();

@@ -1,7 +1,15 @@
 <?php
 include("../../conn/conn.php");
 revisarPrivilegio(4);
-$idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '';
+$idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : ''; // Establece un valor predeterminado si no se proporciona en la URL
+$idProyectoEncriptado = base64_encode($idProyecto);
+if (isset($_GET['id_proyecto'])) {
+ // Recupera el ID del proyecto desde la URL y desencripta usando base64_decode
+ $idProyectoEncriptado = $_GET['id_proyecto'];
+ $idProyecto = base64_decode($idProyectoEncriptado);
+
+ // Ahora, $idProyecto contiene el ID del proyecto desencriptado y puedes utilizarlo en tu página.
+}
 
 if(isset($_POST['guardar'])){
     $idPro = $_POST['idProyecto']; // Corrección: Obtener idProyecto desde el formulario
@@ -66,7 +74,7 @@ include("../../template/top.php");
                         <input type="number" id="cantidad" step="0.001" oninput="calcular()" name="cantidad" required type="number"  class="form-control" autocomplete="off">
                     </div>       
                     <div class="col-md-6">
-                    <label for "costo">Costo</label>
+                    <label for = "costo">Costo</label>
                         <input type="number" id="costo" step="0.001" oninput="calcular()" name="costo" required type="number"  class="form-control" autocomplete="off">
                     </div>
                  </div>   
