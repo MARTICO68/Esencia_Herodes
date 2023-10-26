@@ -100,7 +100,7 @@ $total = 0; // Inicializa la variable $total
                         <?php while($rowClientes=mysqli_fetch_assoc($query)){ ?>
                         <tr>
                             <td style="min-width:150px">
-                                <a href="EP.php?id_editar=<?=$rowClientes['id']?>" class="btn-sm btn btn-outline-dark"><i class="fa fa-fw fa-edit"></i></a>
+                                <a href="EP.php?id_editar=<?=$rowClientes['id']?>?id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class="btn-sm btn btn-outline-dark"><i class="fa fa-fw fa-edit"></i></a>
                                 <a href="planilla.php?id_eliminar=<?=$rowClientes['id']?>" onclick="return confirm('¿Está seguro(a) que desea eliminar?')" class="btn-sm btn btn-danger"><i class="fas fa-fw fa-trash"></i></a>
                             </td>
                             <td><?=$rowClientes['idEmpleado']?></td>
