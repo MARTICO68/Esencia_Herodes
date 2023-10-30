@@ -20,7 +20,7 @@ if (isset($_GET['id_eliminar'])){
     $sqlEliminar = "UPDATE thoras SET estado = 2 WHERE id = '$idEliminar'";
     $queryEliminar = mysqli_query($conn, $sqlEliminar);
 
-    header("location: planilla.php?id_proyecto=$idProyecto");
+    header("location: planilla.php?id_proyecto=$idProyectoEncriptado");
     exit();
 }
 include("../../template/top.php");
@@ -73,7 +73,7 @@ $total = 0; // Inicializa la variable $total
             ?>
             <div class="row text-center">
                 <div class="col-12">
-                    <a href="NP.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a> 
+                    <a href="NP.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a> 
                     <br>              
                     <img class="img-fluid" src="<?=$baseURL?>img/nohay.gif" ><br>         
                     No hay registros de horas de trabajo.  
@@ -100,8 +100,8 @@ $total = 0; // Inicializa la variable $total
                         <?php while($rowClientes=mysqli_fetch_assoc($query)){ ?>
                         <tr>
                             <td style="min-width:150px">
-                                <a href="EP.php?id_editar=<?=$rowClientes['id']?>?id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class="btn-sm btn btn-outline-dark"><i class="fa fa-fw fa-edit"></i></a>
-                                <a href="planilla.php?id_eliminar=<?=$rowClientes['id']?>" onclick="return confirm('¿Está seguro(a) que desea eliminar?')" class="btn-sm btn btn-danger"><i class="fas fa-fw fa-trash"></i></a>
+                                <a href="EP.php?id_editar=<?=$rowClientes['id']?>&id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class="btn-sm btn btn-outline-dark"><i class="fa fa-fw fa-edit"></i></a>
+                                <a href="planilla.php?id_eliminar=<?=$rowClientes['id']?>&id_proyecto=<?=urlencode($idProyectoEncriptado)?>" onclick="return confirm('¿Está seguro(a) que desea eliminar?')" class="btn-sm btn btn-danger"><i class="fas fa-fw fa-trash"></i></a>
                             </td>
                             <td><?=$rowClientes['idEmpleado']?></td>
                             <td><?=$rowClientes['fecha']?></td>

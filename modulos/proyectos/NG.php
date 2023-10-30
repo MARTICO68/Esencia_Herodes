@@ -26,7 +26,7 @@ if(isset($_POST['guardar'])){
     ?>
     <script> 
         alert('Datos guardados correctamente');          
-        document.location.href = "gastos.php?id_proyecto=<?=urlencode($idProyecto)?>"; // Corrección: Redireccionar correctamente
+        document.location.href = "gastos.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>"; // Corrección: Redireccionar correctamente
     </script>
     <?php
     exit();
@@ -39,7 +39,12 @@ include("../../template/top.php");
         <div class="row">
             <div class="col-12 col-md-6">
                 <h5 class="text-center">Nuevos gastos</h5>
-                <hr>                                              
+                <hr>  
+                <div class="row text-right">
+                    <div class="col-12">
+                        <a href="gastos.php?id_proyecto=<?= $idProyectoEncriptado ?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar </a>
+                    </div>
+                </div>                                            
                 <form class="user" action="" method="post">                               
                 
                 <input type="hidden" name="idProyecto" value="<?= isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '' ?>"> <!-- Campo oculto para idProyecto -->

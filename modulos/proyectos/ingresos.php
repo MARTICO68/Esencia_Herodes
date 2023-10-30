@@ -1,6 +1,6 @@
 <?php
 include("../../conn/conn.php");
-include("../../template/top.php");
+
 revisarPrivilegio(4);
 $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '';
 $idProyectoEncriptado = base64_encode($idProyecto);
@@ -11,6 +11,21 @@ if (isset($_GET['id_proyecto'])) {
 
     // Ahora, $idProyecto contiene el ID del proyecto desencriptado y puedes utilizarlo en tu página.
 }
+
+if (isset($_GET['id_eliminar'])) {
+    $idEliminar = $_GET['id_eliminar'];
+    // Realiza la eliminación y luego redirige
+    $sqlEliminar = "UPDATE tingresos SET estado = 2 WHERE id = '$idEliminar'";
+    $queryEliminar = mysqli_query($conn, $sqlEliminar);
+    if ($queryEliminar) {
+        header("location: ingresos.php?id_proyecto=$idProyectoEncriptado");
+        exit();
+    } else {
+        // Manejar error si la consulta de eliminación falla
+        echo "Error al eliminar el registro: " . mysqli_error($conn);
+    }
+}
+include("../../template/top.php");
 // Variable para almacenar el valor de búsqueda
 $buscar = '';
 
@@ -40,7 +55,7 @@ $total = 0; // Inicializa la variable $total
         </div>
         <div class="row">
             <div class="col-12 text-right p-2 mb-2">
-                <a href="administracion.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar </a>
+                <a href="administracion.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar </a>
             </div>
         </div>
 
@@ -86,8 +101,8 @@ $total = 0; // Inicializa la variable $total
                         <?php while($rowClientes=mysqli_fetch_assoc($query)){ ?>
                         <tr>
                             <td style="min-width:150px">
-                                <a href="EP.php?id_editar=<?=$rowClientes['id']?>" class="btn-sm btn btn-outline-dark"><i class="fa fa-fw fa-edit"></i></a>
-                                <a href="ingresos.php?id_eliminar=<?=$rowClientes['id']?>" onclick="return confirm('¿Está seguro(a) que desea eliminar?')" class="btn-sm btn btn-danger"><i class="fas fa-fw fa-trash"></i></a>
+                                <a href="EI.php?id_editar=<?=$rowClientes['id']?>&id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class="btn-sm btn btn-outline-dark"><i class="fa fa-fw fa-edit"></i></a>
+                                <a href="ingresos.php?id_eliminar=<?=$rowClientes['id']?>&id_proyecto=<?=urlencode($idProyectoEncriptado)?>" onclick="return confirm('¿Está seguro(a) que desea eliminar?')" class="btn-sm btn btn-danger"><i class="fas fa-fw fa-trash"></i></a>
                             </td>
                             <td><?=$rowClientes['fecha']?></td>
                             <td><?=$rowClientes['numero']?></td>

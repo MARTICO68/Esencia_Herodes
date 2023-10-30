@@ -18,25 +18,25 @@ if (isset($_GET['id_editar'])){
 }
 if (isset($_POST['guardar'])){
     $id = $_POST['id'];
-    $idEmpleado = $_POST['idEmpleado'];
+    $nombre = $_POST['nombre'];
     $fecha = $_POST['fecha'];
-    $numero = $_POST['numero'];
-    $precio = $_POST['precio'];
-    $total = $_POST['total'];
+    $cantidad = $_POST['cantidad'];
+    $costo = $_POST['costo'];
+    $gasto = $_POST['gasto'];
    
-    $sqlClientes = "UPDATE thoras SET 
-    idEmpleado = '$idEmpleado',
+    $sqlClientes = "UPDATE tgastos SET 
+    nombre = '$nombre',
     fecha = '$fecha',
-    numero = '$numero',
-    precio = '$precio',
-    total = '$total'
+    cantidad = '$cantidad',
+    costo = '$costo',
+    gasto = '$gasto'
     WHERE id = '$id'";
     $queryClientes = mysqli_query($conn, $sqlClientes);
 
     ?>
     <script>
         alert('El Empleado fue Editado exitosamente.');
-        document.location.href = "planilla.php?id_proyecto=<?= $idProyectoEncriptado ?>";
+        document.location.href = "gastos.php?id_proyecto=<?= $idProyectoEncriptado ?>";
     </script>
     <?php
     exit();
@@ -48,7 +48,7 @@ include('../../template/top.php');
 
 <div class="row text-right">
     <div class="col-12">
-        <a href="planilla.php?id_proyecto=<?= $idProyectoEncriptado ?>" class="btn btn-primary"><i class="fas fa-fw fa-arrow-left"></i> Regresar</a>
+        <a href="gastos.php?id_proyecto=<?= $idProyectoEncriptado ?>" class="btn btn-primary"><i class="fas fa-fw fa-arrow-left"></i> Regresar</a>
     </div>
 </div>
 
@@ -58,7 +58,7 @@ include('../../template/top.php');
     <div class="col-12 col-md-8">
 
         <?php 
-            $sqlEditar = "SELECT * FROM thoras WHERE id = '$idEditar'";
+            $sqlEditar = "SELECT * FROM tgastos WHERE id = '$idEditar'";
             $queryEditar = mysqli_query($conn, $sqlEditar);
             while($rowEditar=mysqli_fetch_array($queryEditar)){
             ?>
@@ -66,13 +66,12 @@ include('../../template/top.php');
             
 
                 <input type="hidden" value="<?=$rowEditar['id']?>" name="id">
-
                 <div class="row">
-                   <div class="col-12 col-md-6">
-                    <label for="idEmpleado">Empleado: </label>
-                    <select class="form-control" name="idEmpleado" id="idEmpleado" autocomplete="off">
+                    <div class="col-12 col-md-6">
+                        <label for="nombre">Materiales: </label>
+                        <select class="form-control" name="nombre" id="nombre" autocomplete="off">
                         <?php 
-                        $sqlidEmpleado = "SELECT * FROM templeados WHERE estado = 1";
+                        $sqlidEmpleado = "SELECT * FROM tinventario WHERE estado = 1";
                         $queryidEmpleado = mysqli_query($conn, $sqlidEmpleado);
                         while($rowidEmpleado = mysqli_fetch_array($queryidEmpleado)){
                             ?>
@@ -80,9 +79,9 @@ include('../../template/top.php');
                             <?php
                         }
                         ?>
-                    </select>
-                   </div>
-                </div> 
+                        </select>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-12 col-md-6">                                                
@@ -93,22 +92,22 @@ include('../../template/top.php');
 
                 <div class="row">
                     <div class="col-12">
-                        <label for="numero">Numero:</label>
-                        <input type="text" id="numero" step="0.001" oninput="calcular()" value="<?=$rowEditar['numero']?>" name="numero" class="form-control">
+                        <label for="cantidad">Cantidad:</label>
+                        <input type="text" id="cantidad" step="0.001" oninput="calcular()" value="<?=$rowEditar['cantidad']?>" name="cantidad" class="form-control">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12">
-                        <label for="precio">Precio:</label>
-                        <input type="text" id="precio" step="0.001" oninput="calcular()" value="<?=$rowEditar['precio']?>" name="precio" class="form-control">
+                        <label for="costo">Costo:</label>
+                        <input type="text" id="costo" step="0.001" oninput="calcular()" value="<?=$rowEditar['costo']?>" name="costo" class="form-control">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12">
-                        <label for="total">Total:</label>
-                        <input type="text" id="total" value="<?=$rowEditar['total']?>" name="total" class="form-control">
+                        <label for="gasto">Gasto:</label>
+                        <input type="text" id="gasto" value="<?=$rowEditar['gasto']?>" name="gasto" class="form-control">
                     </div>
                 </div>
 
@@ -130,9 +129,9 @@ include('../../template/top.php');
 
 function calcular(){
 try{ 
-var a = parseFloat(document.getElementById("numero").value) || 0,
-    b = parseFloat(document.getElementById("precio").value) || 0;
-    document.getElementById("total").value = a * b;
+var a = parseFloat(document.getElementById("cantidad").value) || 0,
+    b = parseFloat(document.getElementById("costo").value) || 0;
+    document.getElementById("gasto").value = a * b;
 } catch (e) {}
 
 }        

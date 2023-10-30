@@ -73,12 +73,12 @@ include('../../template/top.php');
                 <div class="row">
                     <div class="col-md-6">
                         <label for="fechaini" class="animate__animated animate__slideInLeft"><i class="far fa-fw fa-user-circle animate__animated animate__slideInLeft"></i> Fecha inicial:</label>
-                        <input type="text" id="fechaini" value="<?=$rowEditar['fechaini']?>" name="fechaini" class="form-control shadow-sm animate__animated animate__zoomIn">
+                        <input type="date" id="fechaini" value="<?=$rowEditar['fechaini']?>" name="fechaini" class="form-control shadow-sm animate__animated animate__zoomIn">
                     </div>
                 
                     <div class="col-md-6">
                         <label for="fechafin" class="animate__animated animate__slideInLeft"><i class="fas fa-fw fa-phone animate__animated animate__slideInLeft"></i> Fecha de finalizacion: </label>
-                        <input type="text" id="fechafin" value="<?=$rowEditar['fechafin']?>" name="fechafin" class="form-control shadow-sm animate__animated animate__zoomIn">
+                        <input type="date" id="fechafin" value="<?=$rowEditar['fechafin']?>" name="fechafin" class="form-control shadow-sm animate__animated animate__zoomIn">
                     </div>
                 </div>
 

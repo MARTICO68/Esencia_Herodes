@@ -21,7 +21,7 @@ if (isset($_GET['id_eliminar'])) {
     $sqlEliminar = "UPDATE tgastos SET estado = 2 WHERE id = '$idEliminar'";
     $queryEliminar = mysqli_query($conn, $sqlEliminar);
     if ($queryEliminar) {
-        header("location: gastos.php?id_proyecto=$idProyecto");
+        header("location: gastos.php?id_proyecto=$idProyectoEncriptado");
         exit();
     } else {
         // Manejar error si la consulta de eliminación falla
@@ -126,7 +126,7 @@ $totalFinal2 = $montoTotal1 + $totalGastos;
         ?>
         <div class="row text-right p-2 mb-2">
             <div class="col-12">
-                <a href="administracion.php?id_proyecto=<?=urlencode($_GET['id_proyecto'])?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar</a>
+                <a href="administracion.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar</a>
             </div>
         </div>
         <?php
@@ -149,7 +149,7 @@ $totalFinal2 = $montoTotal1 + $totalGastos;
                     <table class="table table-striped table-bordered">
                         <thead>
                             <th style="min-width:150px">
-                            <a href="NG.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a>
+                            <a href="NG.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-plus"></i></a>
                             <a href="reportes.php?<?=urlencode('id_proyecto=' .$_GET['id_proyecto'])?>" class="btn-sm btn btn-outline-danger"><i class="fas fa-fw fa-download"></i></a>
                             </th>
                             <th>Nombre</th>
@@ -163,8 +163,8 @@ $totalFinal2 = $montoTotal1 + $totalGastos;
                             <?php while($rowClientes=mysqli_fetch_assoc($query)){ ?>
                             <tr>
                                 <td style="min-width:150px ">
-                                <a href="EG.php?<?=urlencode('id_editar=' .$rowClientes['id'])?>" class="btn-sm btn btn-outline-dark"><i class="fa fa-fw fa-edit"></i></a>
-                                <a href="gastos.php?id_eliminar=<?=$rowClientes['id']?>" onclick="return confirm('¿Está seguro(a) que desea eliminar?')" class="btn-sm btn btn-danger"><i class="fas fa-fw fa-trash"></i></a>
+                                <a href="EG.php?id_editar=<?=$rowClientes['id']?>&id_proyecto=<?=urlencode($idProyectoEncriptado)?>"  class="btn-sm btn btn-outline-dark"><i class="fa fa-fw fa-edit"></i></a>
+                                <a href="gastos.php?id_eliminar=<?=$rowClientes['id']?>&id_proyecto=<?=urlencode($idProyectoEncriptado)?>" onclick="return confirm('¿Está seguro(a) que desea eliminar?')" class="btn-sm btn btn-danger"><i class="fas fa-fw fa-trash"></i></a>
                                 </td>                               
                                 <td><?=$rowClientes['nombre']?></td>
                                 <td><?=$rowClientes['fecha']?></td>
