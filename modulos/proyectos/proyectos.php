@@ -59,7 +59,7 @@ include("../../template/top.php");
                 <a href="EPRO.php?id_editar=<?=$rowClientes['id']?>" class="btn-sm btn btn-outline-dark"><i class="fa fa-fw fa-edit"></i></a>
                 <!-- Agrega el SweetAlert2 -->
                 <a href="#" class="btn-sm btn btn-danger" data-id="<?= $rowClientes['id'] ?>"><i class="fas fa-fw fa-trash"></i></a>
-                <a href="administracion.php?id_proyecto=<?= $rowClientes['id'] ?>" class="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-folder"></i></a>
+                <a href="administracion.php?id_proyecto=<?= $rowClientes['id'] ?>" class ="btn-sm btn btn-outline-success"><i class="fas fa-fw fa-folder"></i></a>
               </td>
               <td><?= $rowClientes['nombre'] ?></td>
               <td><?= $rowClientes['descripcion'] ?></td>
@@ -126,7 +126,20 @@ include("../../template/top.php");
       </table>
     </div>
   </div>
+
+  <div class="card-footer">
+    <strong>Total: <span id="total-subtotal">0</span></strong>
+  </div>
 </div>
+
+<style>
+  .negativo {
+    color: red;
+  }
+  .positivo {
+    color: green;
+  }
+</style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -136,20 +149,30 @@ include("../../template/top.php");
       url: 'actualizarDatos.php', // URL del archivo PHP que devuelve los datos actualizados
       dataType: 'json',
       success: function (data) {
+        let totalSubtotal = 0; // Variable para almacenar la suma de subtotales
+
         // Limpia la tabla actual
         $('#tabla-proyectos tbody').empty();
 
         // Recorre los datos y actualiza la tabla
         $.each(data, function (index, proyecto) {
+          // Agrega la clase 'negativo' si el subtotal es negativo y 'positivo' si es positivo
+          const subtotalClass = (proyecto.subtotal < 0) ? 'negativo' : 'positivo';
           $('#tabla-proyectos tbody').append(
             '<tr>' +
             '<td>' + proyecto.nombre + '</td>' +
-            '<td>' + proyecto.totalGastos + '</td>' +
-            '<td>' + proyecto.totalIngresos + '</td>' +
-            '<td>' + proyecto.subtotal + '</td>' +
+            '<td>' + '₡ ' + proyecto.totalGastos + '</td>' +
+            '<td>' + '₡ ' + proyecto.totalIngresos + '</td>' +
+            '<td class="' + subtotalClass + '">' + '₡ '  + proyecto.subtotal + '</td>' +
             '</tr>'
           );
+
+          // Suma el subtotal al totalSubtotal
+          totalSubtotal += parseFloat(proyecto.subtotal);
         });
+
+        // Actualiza el total de subtotales en el elemento HTML
+        $('#total-subtotal').text('₡' + totalSubtotal);
       }
     });
   }
@@ -164,4 +187,3 @@ include("../../template/top.php");
 <?php
 include("../../template/bottom.php");
 ?>
-
