@@ -1,14 +1,15 @@
 <?php
+//Donde veamos estos includes, es referente a partes del proyecto que se mostraran por todo el sistema 
 include('../../conn/conn.php');
 include('../../template/top.php');
 revisarPrivilegio(4);
-
+//Aqui realizamos el metodo para actualizar los datos en la BD
 $idEditar = 0;
-if (isset($_GET['id_editar'])) {
+if (isset($_GET['id_editar'])){
     $idEditar = $_GET['id_editar'];
 }
 
-if (isset($_POST['guardar'])) {
+if (isset($_POST['guardar'])){
     $id = $_POST['id'];
     $nombre = $_POST['nombre'];
     $fecha = $_POST['fecha'];
@@ -22,11 +23,9 @@ if (isset($_POST['guardar'])) {
         WHERE id = '$id'";
     $queryActualizar = mysqli_query($conn, $sqlActualizar);
 
-    if ($queryActualizar) { 
-        // La actualización fue exitosa, muestra una alerta de confirmación con SweetAlert
-        ?>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
+    if ($queryActualizar) {
+        // La actualización fue exitosa, muestra una alerta de confirmación
+        echo '<script>
             Swal.fire({
                 title: "Registro modificado exitosamente",
                 icon: "success",
@@ -34,22 +33,17 @@ if (isset($_POST['guardar'])) {
             }).then(() => {
                 window.location.href = "inventario.php";
             });
-        </script>
-        <?php
-        exit();
+        </script>';
     } else {
-        // Hubo un error en la actualización, muestra una alerta de error con SweetAlert
-        ?>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
+        // Hubo un error en la actualización, muestra una alerta de error
+        echo '<script>
             Swal.fire({
                 title: "Error al modificar el registro",
                 text: "Hubo un problema al actualizar los datos. Por favor, inténtelo de nuevo.",
                 icon: "error",
                 confirmButtonText: "OK"
             });
-        </script>
-        <?php
+        </script>';
     }
 }
 ?>
@@ -69,7 +63,7 @@ if (isset($_POST['guardar'])) {
                 <?php 
                 $sqlEditar = "SELECT * FROM tinventario WHERE id = '$idEditar'";
                 $queryEditar = mysqli_query($conn, $sqlEditar);
-                while($rowEditar = mysqli_fetch_array($queryEditar)) {
+                while($rowEditar=mysqli_fetch_array($queryEditar)){
                 ?>
 
                 <form class="user" action="" method="post">

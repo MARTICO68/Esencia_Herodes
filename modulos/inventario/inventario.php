@@ -44,19 +44,15 @@ $queryClientes = mysqli_query($conn, $sqlClientes);
 <form method="POST" action="" class="">
   <div class="row mb-3">
         <div class="col-md-3">
-            <h6>Nombre</h6>
             <input type="text" id="nombre" placeholder="Buscar por nombre" name="nombre" class="form-control shadow-sm animate__animated animate__zoomIn">
         </div>
         <div class="col-md-3">
-            <h6>Fecha Inicial</h6>
             <input type="date" id="fecha_inicio" placeholder="Buscar por fecha inicial" name="fecha_inicio" class="form-control shadow-sm animate__animated animate__zoomIn">
         </div>
         <div class="col-md-3">
-            <h6>Fecha Final</h6>
             <input type="date" id="fecha_fin" name="fecha_fin" class="form-control shadow-sm animate__animated animate__zoomIn">
         </div>
         <div class="col-md-3">
-            <hr>
             <button type="submit" class="btn btn-sm btn-dark"><i class="fas fa-search"></i> Buscar</button>
         </div>
   </div>
@@ -132,7 +128,7 @@ $queryClientes = mysqli_query($conn, $sqlClientes);
         event.preventDefault();
         const idEliminar = this.dataset.id;
         Swal.fire({
-          title: '¿Está seguro(a) que desea eliminar el inventario?',
+          title: '¿Está seguro(a) que desea eliminar?',
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',

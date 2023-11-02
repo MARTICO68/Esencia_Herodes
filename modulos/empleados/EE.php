@@ -1,21 +1,20 @@
 <?php 
 //Donde veamos estos includes, es referente a partes del proyecto que se mostraran por todo el sistema 
 include('../../conn/conn.php');
-include('../../template/top.php');
 revisarPrivilegio(4);
 $idEditar = 0;
 if (isset($_GET['id_editar'])){
     $idEditar = $_GET['id_editar'];
 }
 //Aqui realizamos el metodo para actualizar los datos en la BD
-if (isset($_POST['guardar'])) {
+if (isset($_POST['guardar'])){
     $id = $_POST['id'];
     $identificacion = $_POST['identificacion'];
     $nombre = $_POST['nombre'];
     $apellidos = $_POST['apellidos'];
     $puesto = $_POST['puesto'];
     $telefono = $_POST['telefono'];
-
+   
     $sqlClientes = "UPDATE templeados SET 
     identificacion = '$identificacion',
     nombre = '$nombre',
@@ -25,26 +24,17 @@ if (isset($_POST['guardar'])) {
     WHERE id = '$id'";
     $queryClientes = mysqli_query($conn, $sqlClientes);
 
-    if ($queryClientes) {
-        ?>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script>
-            swal({
-                title: "Éxito",
-                text: "El empleado fue editado exitosamente.",
-                icon: "success",
-            }).then(function () {
-                window.location.href = 'empleados.php';
-            });
-        </script>
-        <?php
-        exit();
-    }
+    ?>
+    <script>
+        alert('El Empleado fue Editado exitosamente.');
+        document.location.href = 'empleados.php';
+    </script>
+    <?php
+    exit();
 }
+
+include('../../template/top.php');
 ?>
-
-
-
 <div class="card m-4">
     <div class="card-body">
         <h5>Editar Empleado</h5>

@@ -1,37 +1,19 @@
 
-             
-                <!-- /.container-fluid -->
+        </div>
+        <!-- /.container-fluid -->
 
-                </div>
-            <!-- End of Main Content -->
+    </div>
+    <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <style>
-    footer.sticky-footer {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        height: 50px;
-        background-color: #fff;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    footer.sticky-footer span {
-        color: #666;
-        font-size: 16px;
-        font-weight: 400;
-    }
-</style>
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center">
-                    <span>Copyright &copy;  2023</span>
-                </div>
+    <!-- Footer -->
+            
+    <footer class="sticky-footer text-dark py-3 bg-white">
+        <div class="row pl-3">
+            <div class="col-12 text-center">
+                Copyright &copy; Esencia Herodes 2023
             </div>
-        </footer>
+        </div>
+    </footer>
             <!-- End of Footer -->
 
         </div>
@@ -46,17 +28,35 @@
     </a>
 
     <!-- Logout Modal-->
-   
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Bootstrap core JavaScript-->
+    <!-- Bootstrap core JavaScript-->   
     <script src="<?=$baseURL?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="<?=$baseURL?>vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="<?=$baseURL?>js/sb-admin-2.min.js"></script>
+
 </body>
 
 </html>

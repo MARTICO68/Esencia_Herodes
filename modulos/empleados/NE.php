@@ -15,23 +15,15 @@ if (isset($_POST['guardar'])){
     (identificacion, nombre, apellidos, puesto, telefono, estado) VALUES 
     ('$identificacion', '$nombre', '$apellidos', '$puesto', '$telefono', 1)";
     $queryClientes = mysqli_query($conn, $sqlClientes);
-
-    if ($queryClientes) {
-        ?>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script>
-            swal({
-                title: "Éxito",
-                text: "El empleado fue guardado exitosamente.",
-                icon: "success",
-            }).then(function () {
-                window.location.href = 'empleados.php';
-            });
-        </script>
-        <?php
-        exit();
-    }
+    ?>
+    <script>
+        alert('El cliente fue guardado exitosamente.');
+        document.location.href = 'empleados.php';
+    </script>
+    <?php 
+    exit();
 }
+
 ?>
 
 <div class="card m-4">

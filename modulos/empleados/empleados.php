@@ -111,14 +111,13 @@ include("../../template/top.php");
 
 <script>
     // Agrega un evento click a todos los botones de eliminar
-    const deleteButtons = document.querySelectorAll(".delete-btn");
+    const deleteButtons = document.querySelectorAll(".btn-danger");
     deleteButtons.forEach(function(deleteButton) {
         deleteButton.addEventListener("click", function(event) {
             event.preventDefault();
             const idEliminar = this.dataset.id;
             Swal.fire({
-                title: '¿Está seguro(a) que desea eliminar el Empleado?',
-                text: "Esta acción no se puede deshacer",
+                title: '¿Está seguro(a) que desea eliminar?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -127,12 +126,13 @@ include("../../template/top.php");
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'empleados.php?id_eliminar=' + idEliminar;
+                    window.location.href = empleados.php?id_eliminar=${idEliminar};
                 }
             });
         });
     });
 </script>
+
 <?php
 include("../../template/bottom.php");
 ?>

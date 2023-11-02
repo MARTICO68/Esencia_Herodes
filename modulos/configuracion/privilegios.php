@@ -1,9 +1,10 @@
-<?php
+<?php 
 include ("../../conn/conn.php");
 revisarPrivilegio(4);
 $titulo = "Privilegios";
 include ("../../template/top.php");
 ?>
+
 
 <div class="card m-4">
   <div class="card-body">
@@ -29,11 +30,11 @@ include ("../../template/top.php");
             <div class="row">
                 <div class="col-12">
                     <label for="url">URL: </label>
-                    <input type="text" class= "form-control" id="url" name="url" autocomplete="off">
+                    <input type="text" class="form-control" id="url" name="url" autocomplete="off">
                 </div>
             </div>
 
-            <div class="row text-center" id="botoneraNuevo">
+            <div class="row text-center" id="botoneraNuevo"> 
                 <div class="col-12">
                     <button class="btn btn-dark btn-sm animate__animated animate__zoomIn mt-3" onclick="nuevoPrivilegio()">Guardar</button>
                 </div>
@@ -58,13 +59,9 @@ include ("../../template/top.php");
         </div>
         <div class="col-12 col-md-9" id="privilegios"></div>
     </div>
-</div>
-</div>
-<?php 
-include ("../../template/bottom.php");
-?>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
+
+
+    <script>
     // Funciones que se necesitan para los privilegios    
     function nuevoPrivilegio(){
         var nombre = $('#nombre').val();
@@ -77,29 +74,16 @@ include ("../../template/bottom.php");
             $('#nombre').val('');
             $('#url').val('');
             $('#icono').val('');
-            Swal.fire('Privilegio agregado con éxito', '', 'success');
         });
     }
 
     function eliminarPrivilegio(id){
-        Swal.fire({
-            title: '¿Está seguro(a) que desea eliminar el Privilegio?',
-                text: "Esta acción no se puede deshacer",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar!',
-                cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.post('funcionesAJAXPrivilegios.php', {action: 'deletePrivilege', id: id})
-                .done(function (data){
-                    cargarPrivilegios();
-                    Swal.fire('Privilegio eliminado con éxito', '', 'success');
-                });
-            }
-        });
+        if (confirm('¿Está seguro que desea eliminar?')){
+            $.post('funcionesAJAXPrivilegios.php', {action: 'deletePrivilege', id: id})
+            .done(function (data){
+                cargarPrivilegios();
+            }); 
+        }
     }
 
     function loadPrivilegio(id, nombre, icono, url){
@@ -132,7 +116,6 @@ include ("../../template/bottom.php");
         .done(function (data){
             cargarPrivilegios();
             cancel();
-            Swal.fire('Privilegio modificado con éxito', '', 'success');
         });
     }
 
@@ -150,4 +133,9 @@ include ("../../template/bottom.php");
         });
     }
     cargarPrivilegios();
-</script>
+    </script>
+</div>
+</div>
+<?php 
+include ("../../template/bottom.php");
+?>
