@@ -9,9 +9,7 @@ if (isset($_POST['entrar'])){
     if (mysqli_num_rows($queryUsuario) == 1){
         while($rowUsuario = mysqli_fetch_array($queryUsuario)){
             $idUsuario = $rowUsuario['id'];
-            $codigo = $rowUsuario['codigo'];
-            //$fecha = new DateTime();
-            //$expiracion = $fecha->getTimestamp() + 300; 
+            $codigo = $rowUsuario['codigo']; 
             setcookie('hksjne3443', $idUsuario);
             setcookie('yeidms9837', $codigo);
 
@@ -27,8 +25,6 @@ if (isset($_POST['entrar'])){
     }
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 

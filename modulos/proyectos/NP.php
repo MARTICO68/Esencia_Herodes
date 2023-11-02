@@ -1,5 +1,7 @@
 <?php 
+//Donde veamos estos includes, es referente a partes del proyecto que se mostraran por todo el sistema
    include("../../conn/conn.php");
+   include("../../template/top.php");
    revisarPrivilegio(4);
    $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : ''; // Establece un valor predeterminado si no se proporciona en la URL
    $idProyectoEncriptado = base64_encode($idProyecto);
@@ -7,9 +9,8 @@
     // Recupera el ID del proyecto desde la URL y desencripta usando base64_decode
     $idProyectoEncriptado = $_GET['id_proyecto'];
     $idProyecto = base64_decode($idProyectoEncriptado);
-
-    // Ahora, $idProyecto contiene el ID del proyecto desencriptado y puedes utilizarlo en tu página.
 }
+//Aqui realizamos el metodo para guardar los datos en la BD
    if (isset($_POST['guardar'])){
     $idPro= $_POST['idProyecto'];
     $idEmpleado = $_POST['idEmpleado'];    
@@ -23,34 +24,41 @@
         $queryClientes = mysqli_query($conn, $sqlClientes);
 
         ?>
-        <script>          
-            alert('Planilla guardada correctamente.');
-            document.location.href = "planilla.php?id_proyecto=<?= $idProyectoEncriptado ?>";
-        </script>
-        <?php
-        exit();
-    }
+    <script>
+        Swal.fire({
+            title: 'Planilla guardada correctamente',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonText: 'OK',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.location.href = "planilla.php?id_proyecto=<?= $idProyectoEncriptado ?>";
+            }
+        });
+    </script>
+    <?php
 
-    include("../../template/top.php");
+}
+   
     ?>
-    <div class="card">
+    <div class="card m-4">
     <div class="card-body">
-        <h4>Nueva planilla</h4>
+        <h5>Nueva planilla</h5>
         <hr>
     <div class="row text-right">
         <div class="col-12">
-            <a href="planilla.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar </a>
+            <a href="planilla.php?id_proyecto=<?= $idProyectoEncriptado ?>" class="btn btn-sm btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar </a>
         </div>
     </div>
     <div class="row">
         <div class="col-12 col-md-6">
         
             <form class="user" action="" method="post">
-                           
+                <input type="hidden" name="idProyecto" value="<?= $idProyecto ?>">    
                 <div class="row">
                    <div class="col-12 col-md-6">
-                    <label for="idEmpleado">Empleado: </label>
-                    <select class="form-control" name="idEmpleado" id="idEmpleado" autocomplete="off">
+                    <label for="idEmpleado" class="animate__animated animate__slideInLeft">Empleado: </label>
+                    <select class="form-control shadow-sm animate__animated animate__zoomIn" name="idEmpleado" id="idEmpleado" autocomplete="off">
                         <?php 
                         $sqlidEmpleado = "SELECT * FROM templeados WHERE estado = 1";
                         $queryidEmpleado = mysqli_query($conn, $sqlidEmpleado);
@@ -65,27 +73,27 @@
                 </div>           
                 <div class="row">
                     <div class="col-12 col-md-6">                                                
-                        <label for="fecha">Fecha</label>
-                        <input type="date" id="fecha" name="fecha" required type="text" value="<?= $fecha?>" class="form-control" autocomplete="off">                   
+                        <label for="fecha" class="animate__animated animate__slideInLeft">Fecha</label>
+                        <input type="date" id="fecha" name="fecha" required type="text" value="<?= $fecha?>" class="form-control shadow-sm animate__animated animate__zoomIn" autocomplete="off">                   
                     </div>
                 </div>
                 <body> 
                  
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="numero"># de cajuelas / fanegas</label>
-                        <input type="number" id="numero" step="0.001" oninput="calcular()" name="numero" required type="number" class="form-control" autocomplete="off">
+                        <label for="numero" class="animate__animated animate__slideInLeft"># de cajuelas</label>
+                        <input type="number" id="numero" step="0.001" oninput="calcular()" name="numero" required type="number" class="form-control shadow-sm animate__animated animate__zoomIn" autocomplete="off">
                     </div>
                 
                     <div class="col-md-6">
-                        <label for="precio">Precio por cajuela / fanega</label>
-                        <input type="number" id="precio" step="0.001" oninput="calcular()" name="precio" required type="number" class="form-control" autocomplete="off">
+                        <label for="precio" class="animate__animated animate__slideInLeft">Precio por cajuela</label>
+                        <input type="number" id="precio" step="0.001" oninput="calcular()" name="precio" required type="number" class="form-control shadow-sm animate__animated animate__zoomIn" autocomplete="off">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12 col-md-6">
-                        <label for="total">Total</label>                    
-                        <input type="number" id="total"  step="0.001" name="total" required type="number" class="form-control" autocomplete="off">
+                        <label for="total" class="animate__animated animate__slideInLeft">Total</label>                    
+                        <input type="number" id="total"  step="0.001" name="total" required type="number" class="form-control shadow-sm animate__animated animate__zoomIn" autocomplete="off">
                     </div>
                 </div>
                 </body>                
@@ -101,17 +109,17 @@
                 }        
                 </script>                                                               
                 </script>
-                <div class="row text-left mr-4 mt-4">
+                <div class="row text-center mt-4">
                      <div class="col-12">
-                        <button type="submit" class="btn btn-dark btn-user btn-block" name="guardar"><i class="fas fa-fw fa-save"></i> Guardar</button>
+                        <button type="submit" class="btn btn-dark btn-sm animate__animated animate__zoomIn" name="guardar"><i class="fas fa-fw fa-save"></i> Guardar</button>
                         <hr>
                      </div>
                 </div>
             </form>
         </div>        
-            <div class="col-12 col-md-6 text-center">                                             
-                <img class="img-fluid" src="<?=$baseURL?>img/material.gif" height="550px"><br>                                       
-            </div>
+        <div class="col-12 col-md-6 text-center">                                             
+            <img class="img-fluid" src="<?=$baseURL?>img/material.gif" height="550px"><br>                                       
+        </div>
     </div>
     </div>
     </div>

@@ -24,13 +24,15 @@ if (isset($_GET['id_cerrar'])){
     exit();
 }
 
-$titulo = "Usuarios";
 include('../../template/top.php');
 ?>
-
-<div class="row text-right">
+<div class="card m-4">
+    <div class="card-body">
+    <h5>Usuarios</h5>
+    <hr>
+    <div class="row text-right">
     <div class="col-12 mb-4">
-        <a href="nuevoUsuario.php" class="btn btn-primary"><i class="fas fa-fw fa-plus"></i> Nuevo Usuario</a>
+        <a href="NU.php" class="btn btn-sm btn-dark"><i class="fas fa-fw fa-plus"></i> Nuevo Usuario</a>
     </div>
 </div>
 
@@ -49,9 +51,10 @@ if (mysqli_num_rows($queryCliente) == 0){
 <?php 
 }else{
 ?>
-<table class="table table-sm table-striped">
-    <thead class="bg-dark text-light">
-        <th></th>
+<div class="table-responsive">
+<table class="table table-sm table-striped table-bordered">
+    <thead class="text-dark">
+        <th>Acciones</th>
         <th>Nombre</th>
         <th>Usuario</th> 
     </thead>
@@ -60,10 +63,10 @@ if (mysqli_num_rows($queryCliente) == 0){
         while($rowCliente=mysqli_fetch_array($queryCliente)){
             ?>
             <tr>
-                <td>
-                    <a href="editarUsuario.php?id_editar=<?=$rowCliente['id']?>" class="btn btn-secondary"><i class="fa fa-fw fa-pen"></i></a>
-                    <a href="usuarios.php?id_eliminar=<?=$rowCliente['id']?>" onclick="return confirm('¿Está seguro(a) que desea eliminar?')" class="btn btn-danger"><i class="fas fa-fw fa-trash"></i></a>
-                    <a href="usuarios.php?id_cerrar=<?=$rowCliente['id']?>" class="btn btn-secondary" onclick="return confirm('¿Está seguro que desea cerrar la sesión de este usuario?')"><i class="fas fa-fw fa-lock"></i></a>
+                <td style="min-width:150px">
+                    <a href="EU.php?id_editar=<?=$rowCliente['id']?>" class="btn btn-sm btn-outline-info"><i class="fa fa-fw fa-edit"></i></a>
+                    <a href="usuarios.php?id_eliminar=<?=$rowCliente['id']?>" onclick="return confirm('¿Está seguro(a) que desea eliminar?')" class="btn btn-sm btn-danger"><i class="fas fa-fw fa-trash"></i></a>
+                    <a href="usuarios.php?id_cerrar=<?=$rowCliente['id']?>" class="btn btn-sm btn-outline-secondary" onclick="return confirm('¿Está seguro que desea cerrar la sesión de este usuario?')"><i class="fas fa-fw fa-lock"></i></a>
                 </td>
                 <td><?=$rowCliente['nombre']?></td>
                 <td><?=$rowCliente['usuario']?></td>
@@ -73,12 +76,13 @@ if (mysqli_num_rows($queryCliente) == 0){
         ?>
     </tbody>
 </table>
+</div>
 <?php
 }
 
-
 ?>
-
+    </div>
+</div>
 <?php 
 include('../../template/bottom.php');
 ?>

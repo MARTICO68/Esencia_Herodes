@@ -1,5 +1,4 @@
 <?php 
-
 include ("../../conn/conn.php");
 $action = $_POST['action'];
 
@@ -55,9 +54,9 @@ if ($action == 'getPrivileges'){
     }else{
         ?>
         <div class="table-responsive">
-            <table class="table table-sm">
-                <thead>
-                    <th style="min-width: 120px"></th>
+            <table class="table table-sm table-striped table-bordered">
+                <thead class="text-dark">
+                    <th>Acciones</th>
                     <th></th>
                     <th>Id</th>    
                     <th>Nombre</th>
@@ -69,8 +68,8 @@ if ($action == 'getPrivileges'){
                         ?>
                         <tr>
                         <td>
-                                <button class="btn btn-secondary" style="min-width: 45px" onclick="loadPrivilegio(<?=$rowPrivilegios['id']?>, '<?=$rowPrivilegios['nombre']?>', '<?=$rowPrivilegios['icono']?>', '<?=$rowPrivilegios['url']?>')"><i class="fa fa-solid fa-pencil"></i></button>
-                                <button class="btn btn-danger" style="min-width: 45px" onclick="eliminarPrivilegio(<?=$rowPrivilegios['id']?>)"><i class="fas fa-fw fa-trash"></i></button>
+                            <button class="btn btn-sm btn-outline-info" style="min-width: 45px" onclick="loadPrivilegio(<?=$rowPrivilegios['id']?>, '<?=$rowPrivilegios['nombre']?>', '<?=$rowPrivilegios['icono']?>', '<?=$rowPrivilegios['url']?>')"><i class="fa fa-solid fa-edit"></i></button>
+                            <button class="btn btn-sm btn-danger" style="min-width: 45px" onclick="eliminarPrivilegio(<?=$rowPrivilegios['id']?>)"><i class="fas fa-fw fa-trash"></i></button>
                             </td>
                             <td><i class="fas fa-fw fa-<?=$rowPrivilegios['icono']?>"></i></td>
                             <td><?=$rowPrivilegios['id']?></td>

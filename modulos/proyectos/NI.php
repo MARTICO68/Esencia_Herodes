@@ -1,5 +1,6 @@
 <?php
 include("../../conn/conn.php");
+include("../../template/top.php");
 revisarPrivilegio(4);
 $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : ''; // Establece un valor predeterminado si no se proporciona en la URL
 $idProyectoEncriptado = base64_encode($idProyecto);
@@ -23,55 +24,61 @@ if(isset($_POST['guardar'])){
     $queryClientes = mysqli_query($conn, $sqlClientes);
     
     ?>
-    <script> 
-        alert('Datos guardados correctamente');          
-        document.location.href = "ingresos.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>"; // Corrección: Redireccionar correctamente
+    <script>
+        Swal.fire({
+            title: 'Ingreso guardado correctamente',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonText: 'OK',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.location.href = "ingresos.php?id_proyecto=<?= $idProyectoEncriptado ?>";
+            }
+        });
     </script>
     <?php
     exit();
 }
-include("../../template/top.php");
+
 ?>
-<link rel="stylesheet" href="modals.css">
-<div class="card">
+<div class="card m-4">
     <div class="card-body">
+            <h5>Nuevos ingresos</h5>
+            <hr> 
+                <div class="col-12 text-right">                                                                 
+                    <a href="ingresos.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn btn-sm btn-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar</a>                                  
+                </div> 
         <div class="row">
-            <div class="col-12 col-md-6">
-                <h5 class="text-center">Nuevos ingresos</h5>
-                <hr>                                              
+            <div class="col-12 col-md-6">                                            
                 <form class="user" action="" method="post">                               
                 
                 <input type="hidden" name="idProyecto" value="<?= isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '' ?>"> <!-- Campo oculto para idProyecto -->
                  
-                <div class="col-12 text-right">                                                                 
-                <a href="administracion.php?id_proyecto=<?=urlencode($idProyecto)?>" class="btn btn-outline-dark"><i class="fas fa-fw fa-arrow-left"></i> Regresar</a>                                  
-                </div> 
-
                 <div class="row">
                 <div class="col-md-6">                                                
-                <label for="fecha">Fecha</label>
-                <input type="date" id="fecha" name="fecha" required type="text" value="<?= $fecha?>" class="form-control" autocomplete="off">                   
+                <label for="fecha" class="animate__animated animate__slideInLeft">Fecha</label>
+                <input type="date" id="fecha" name="fecha" required type="text" value="<?= $fecha?>" class="form-control shadow-sm animate__animated animate__zoomIn" autocomplete="off">                   
                 </div>
                 </div>
 
            
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="numero"># de fanegas</label>
-                        <input type="number" id="numero" oninput="calcular()" step="0.001" name="numero" required type="number" class="form-control" autocomplete="off">       
+                        <label for="numero" class="animate__animated animate__slideInLeft"># de fanegas</label>
+                        <input type="number" id="numero" oninput="calcular()" step="0.001" name="numero" required type="number" class="form-control shadow-sm animate__animated animate__zoomIn" autocomplete="off">       
                     </div>
                     <br>
                     <body>                                                                    
                     <div class="col-md-6">
-                        <label for="precio">Precio por fanega</label>
-                        <input type="number" id="precio" oninput="calcular()" name="precio" required type="number" class="form-control" autocomplete="off">       
+                        <label for="precio" class="animate__animated animate__slideInLeft">Precio por fanega</label>
+                        <input type="number" id="precio" oninput="calcular()" name="precio" required type="number" class="form-control shadow-sm animate__animated animate__zoomIn" autocomplete="off">       
                     </div>
                     </div>  
                                                                 
                     <div class="row">
                     <div class="col-md-6">
-                        <label for="total">Total</label>
-                        <input type="number" id="total" step="0.001" name="total" required type="number" class="form-control"  autocomplete="off">       
+                        <label for="total" class="animate__animated animate__slideInLeft">Total</label>
+                        <input type="number" id="total" step="0.001" name="total" required type="number" class="form-control shadow-sm animate__animated animate__zoomIn"  autocomplete="off">       
                     </div>   
                     </div>
         
@@ -87,18 +94,18 @@ include("../../template/top.php");
                 }        
                 </script>                                                               
                 </script>
-
-                <hr> 
-                <div class="row">                     
+ 
+                <div class="row text-center m-4">                     
                     <div class="col-12 mb-2">
-                        <button type="submit" class="btn btn-dark btn-user btn-block" name="guardar"><i class="fa fa-save"></i> Guardar</button>                               
+                    <button type="submit" class="btn btn-dark btn-sm animate__animated animate__zoomIn" name="guardar"><i class="fa fa-save"></i> Guardar</button> 
+                    <hr>                              
                 </div>                                                                                                     
             </div>                      
-        </div>
-        <div class="col-12 col-md-6 text-center">                                             
-                <img class="img-fluid" src="<?=$baseURL?>img/proyecto.gif" height="550px"><br>                                       
-            </div>                                                                                                                                                                           
+        </div>                                                                                                                                                                          
         </form>
+        <div class="col-12 col-md-6 text-center">                                             
+            <img class="img-fluid" src="<?=$baseURL?>img/inicio1.gif" height="550px"><br>                                       
+        </div> 
         
     </div>                                                
 </div>

@@ -19,7 +19,7 @@ while ($rowProyecto = mysqli_fetch_array($queryProyectos)) {
         'nombre' => $rowProyecto['nombre'],
         'totalGastos' => $totalGastos,
         'totalIngresos' => $rowProyecto['total_ingresos'],
-        'subtotal' => $totalGastos - $rowProyecto['total_ingresos']
+        'subtotal' => $rowProyecto['total_ingresos'] - $totalGastos
     );
 }
 
