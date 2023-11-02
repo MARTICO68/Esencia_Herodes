@@ -1,19 +1,20 @@
-<?php 
+<?php
 include('../../conn/conn.php');
+include('../../template/top.php');
 revisarPrivilegio(4);
 $idEditar = 0;
-if (isset($_GET['id_editar'])){
+if (isset($_GET['id_editar'])) {
     $idEditar = $_GET['id_editar'];
 }
 
-if (isset($_POST['guardar'])){
+if (isset($_POST['guardar'])) {
     $id = $_POST['id'];
     $identificacion = $_POST['identificacion'];
     $nombre = $_POST['nombre'];
     $apellidos = $_POST['apellidos'];
     $puesto = $_POST['puesto'];
     $telefono = $_POST['telefono'];
-   
+
     $sqlClientes = "UPDATE templeados SET 
     identificacion = '$identificacion',
     nombre = '$nombre',
@@ -23,18 +24,26 @@ if (isset($_POST['guardar'])){
     WHERE id = '$id'";
     $queryClientes = mysqli_query($conn, $sqlClientes);
 
-    ?>
-    <script>
-        alert('El Empleado fue Editado exitosamente.');
-        document.location.href = 'empleados.php';
-    </script>
-    <?php
-    exit();
+    if ($queryClientes) {
+        ?>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal({
+                title: "Éxito",
+                text: "El empleado fue editado exitosamente.",
+                icon: "success",
+            }).then(function () {
+                window.location.href = 'empleados.php';
+            });
+        </script>
+        <?php
+        exit();
+    }
 }
-
-
-include('../../template/top.php');
 ?>
+
+
+
 <div class="card m-4">
     <div class="card-body">
     <h4>Editar Empleado</h4>

@@ -1,8 +1,8 @@
-<?php 
+<?php
 include("../../conn/conn.php");
 include("../../template/top.php");
 revisarPrivilegio(4);
-if (isset($_POST['guardar'])){
+if (isset($_POST['guardar'])) {
     $identificacion = $_POST['identificacion'];
     $nombre = $_POST['nombre'];
     $apellidos = $_POST['apellidos'];
@@ -14,15 +14,22 @@ if (isset($_POST['guardar'])){
     ('$identificacion', '$nombre', '$apellidos', '$puesto', '$telefono', 1)";
     $queryClientes = mysqli_query($conn, $sqlClientes);
 
-    ?>
-    <script>
-        alert('El cliente fue guardado exitosamente.');
-        document.location.href = 'empleados.php';
-    </script>
-    <?php 
-    exit();
+    if ($queryClientes) {
+        ?>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal({
+                title: "Éxito",
+                text: "El empleado fue guardado exitosamente.",
+                icon: "success",
+            }).then(function () {
+                window.location.href = 'empleados.php';
+            });
+        </script>
+        <?php
+        exit();
+    }
 }
-
 ?>
 
 <div class="card m-4">
