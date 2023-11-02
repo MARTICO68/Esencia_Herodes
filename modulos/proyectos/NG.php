@@ -1,17 +1,18 @@
 <?php
 include("../../conn/conn.php");
+include("../../template/top.php");
 revisarPrivilegio(4);
-$idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : ''; // Establece un valor predeterminado si no se proporciona en la URL
-$idProyectoEncriptado = base64_encode($idProyecto);
-if (isset($_GET['id_proyecto'])) {
- // Recupera el ID del proyecto desde la URL y desencripta usando base64_decode
- $idProyectoEncriptado = $_GET['id_proyecto'];
- $idProyecto = base64_decode($idProyectoEncriptado);
 
- // Ahora, $idProyecto contiene el ID del proyecto desencriptado y puedes utilizarlo en tu página.
+$idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : '';
+$idProyectoEncriptado = base64_encode($idProyecto);
+
+if (isset($_GET['id_proyecto'])) {
+    // Recupera el ID del proyecto desde la URL y desencripta usando base64_decode
+    $idProyectoEncriptado = $_GET['id_proyecto'];
+    $idProyecto = base64_decode($idProyectoEncriptado);
 }
 
-if(isset($_POST['guardar'])){
+if (isset($_POST['guardar'])) {
     $idPro = $_POST['idProyecto']; // Corrección: Obtener idProyecto desde el formulario
     $nombre = $_POST['nombre'];
     $fecha  = $_POST['fecha'];
@@ -22,18 +23,43 @@ if(isset($_POST['guardar'])){
     $sqlClientes = "INSERT INTO tgastos (idProyecto, nombre, fecha, cantidad, costo, gasto, estado) VALUES
     ('$idProyecto', '$nombre', '$fecha', '$cantidad', '$costo', '$gasto', 1)";
     $queryClientes = mysqli_query($conn, $sqlClientes);
-    
-    ?>
-    <script> 
-        alert('Datos guardados correctamente');          
-        document.location.href = "gastos.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>"; // Corrección: Redireccionar correctamente
-    </script>
-    <?php
-    exit();
-}
-include("../../template/top.php");
-?>
 
+    if ($queryClientes) {
+        // Los datos se guardaron exitosamente
+        ?>
+        <script>
+            // Muestra un mensaje de confirmación con SweetAlert2
+            Swal.fire({
+                title: 'Datos guardados correctamente',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirecciona a la página deseada
+                    window.location.href = "gastos.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>";
+                }
+            });
+        </script>
+        <?php
+        exit();
+    } else {
+        // Error al guardar los datos
+        ?>
+        <script>
+            // Muestra un mensaje de error con SweetAlert2
+            Swal.fire({
+                title: 'Error al guardar los datos',
+                text: 'Ha ocurrido un error al guardar los datos. Por favor, inténtalo de nuevo.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </script>
+        <?php
+    }
+}
+
+
+?>
 <div class="card m-4">
     <div class="card-body">
         <h5>Nuevos gastos</h5>
