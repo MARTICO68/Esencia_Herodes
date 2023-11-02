@@ -1,6 +1,5 @@
 <?php 
 include('../../conn/conn.php');
-include('../../template/top.php');
 revisarPrivilegio(3);
 $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : ''; // Establece un valor predeterminado si no se proporciona en la URL
 $idProyectoEncriptado = base64_encode($idProyecto);
@@ -33,23 +32,15 @@ if (isset($_POST['guardar'])){
     $queryClientes = mysqli_query($conn, $sqlClientes);
 
     ?>
-    <script> 
-        Swal.fire({
-            title: 'Ingreso Editado exitosamente',
-            icon: 'success',
-            showCancelButton: false,
-            confirmButtonText: 'OK',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.location.href = "ingresos.php?id_proyecto=<?= $idProyectoEncriptado ?>";
-            }
-        });
+    <script>
+        alert('El Ingreso fue editado exitosamente.');
+        document.location.href = "ingresos.php?id_proyecto=<?= $idProyectoEncriptado ?>";
     </script>
     <?php
     exit();
 }
 
-
+include('../../template/top.php');
 ?>
 <div class="card m-4">
     <div class="card-body">

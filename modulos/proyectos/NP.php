@@ -1,7 +1,6 @@
 <?php 
 //Donde veamos estos includes, es referente a partes del proyecto que se mostraran por todo el sistema
    include("../../conn/conn.php");
-   include("../../template/top.php");
    revisarPrivilegio(4);
    $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : ''; // Establece un valor predeterminado si no se proporciona en la URL
    $idProyectoEncriptado = base64_encode($idProyecto);
@@ -24,22 +23,14 @@
         $queryClientes = mysqli_query($conn, $sqlClientes);
 
         ?>
-    <script>
-        Swal.fire({
-            title: 'Planilla guardada correctamente',
-            icon: 'success',
-            showCancelButton: false,
-            confirmButtonText: 'OK',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.location.href = "planilla.php?id_proyecto=<?= $idProyectoEncriptado ?>";
-            }
-        });
-    </script>
-    <?php
-
-}
-   
+        <script>          
+            alert('Planilla guardada correctamente.');
+            document.location.href = "planilla.php?id_proyecto=<?= $idProyectoEncriptado ?>";
+        </script>
+        <?php
+        exit();
+    }
+    include("../../template/top.php");
     ?>
     <div class="card m-4">
     <div class="card-body">
@@ -54,7 +45,7 @@
         <div class="col-12 col-md-6">
         
             <form class="user" action="" method="post">
-                <input type="hidden" name="idProyecto" value="<?= $idProyecto ?>">    
+                           
                 <div class="row">
                    <div class="col-12 col-md-6">
                     <label for="idEmpleado" class="animate__animated animate__slideInLeft">Empleado: </label>

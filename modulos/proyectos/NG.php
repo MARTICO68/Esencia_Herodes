@@ -1,6 +1,5 @@
 <?php
 include("../../conn/conn.php");
-include("../../template/top.php");
 revisarPrivilegio(4);
 $idProyecto = isset($_GET['id_proyecto']) ? $_GET['id_proyecto'] : ''; // Establece un valor predeterminado si no se proporciona en la URL
 $idProyectoEncriptado = base64_encode($idProyecto);
@@ -25,22 +24,14 @@ if(isset($_POST['guardar'])){
     $queryClientes = mysqli_query($conn, $sqlClientes);
     
     ?>
-    <script>
-        Swal.fire({
-            title: 'Gasto guardado correctamente',
-            icon: 'success',
-            showCancelButton: false,
-            confirmButtonText: 'OK',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.location.href = "gastos.php?id_proyecto=<?= $idProyectoEncriptado ?>";
-            }
-        });
+    <script> 
+        alert('Datos guardados correctamente');          
+        document.location.href = "gastos.php?id_proyecto=<?=urlencode($idProyectoEncriptado)?>"; // Corrección: Redireccionar correctamente
     </script>
     <?php
     exit();
 }
-
+include("../../template/top.php");
 ?>
 
 <div class="card m-4">
